@@ -1,5 +1,5 @@
 User0001 Bank 100 Salary 07032019 1411
+User0001 Bank -1000 Transaction	15032019 0720
 JasonChan Cash -50 Food 08032019 1412
 JasonChan Card -30 Game 08032019 1515
-User0001 Bank -1000 Transaction	15032019 0720
-JasonChan Bank 1000 Transaction	15032019 0721
+JasonChan Bank 1000 Transaction 15032019 0721
