@@ -4,10 +4,6 @@
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
-#define INFORMATION 1
-#define ACCOUNT		2
-#define RECORD		3
-#define BUDGET		4
 using namespace std;
 class Account {
 public:
@@ -38,12 +34,8 @@ public:
 	vector<Record> record;
 	vector<Budget> budget;
 };
-bool LoadAll(User&,string,string,string,string);
-bool LoadInformation(User&,string);
-bool LoadAccount(User&,string);
-bool LoadRecord(User&,string);
-bool LoadBudget(User&,string);
-bool UpdateAll(const User&,string,string,string,string,string);
-bool Update(const User&,string,int,string);
-void Write(const User&,ofstream&,int);
+bool LoadAll(User&,vector<string>);
+bool Load(User&,string);
+bool UpdateAll(const User&,vector<string>,string="");
+bool Update(const User&,string,string="");
 void Rename(string,string);
