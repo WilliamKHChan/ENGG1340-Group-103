@@ -61,8 +61,8 @@ bool Load(User &user,string filename) {
 				iss>>field;
 				rd.income=atof(field.c_str());
 				iss>>rd.type;
-				iss>>rd.date;
-				iss>>rd.time;
+				iss>>rd.time.timestamp;
+				ExtractTime(rd.time,true);
 				user.record.push_back(rd);
 			}
 		}
@@ -74,11 +74,13 @@ bool Load(User &user,string filename) {
 			iss>>field;
 			if(field==user.username) {
 				Budget bg;
-				iss>>bg.start;
-				iss>>bg.end;
+				iss>>bg.start.timestamp;
+				iss>>bg.end.timestamp;
 				iss>>bg.type;
 				iss>>field;
 				bg.amount=atof(field.c_str());
+				ExtractTime(bg.start,true);
+				ExtractTime(bg.end,true);
 				user.budget.push_back(bg);
 			}
 		}
@@ -125,12 +127,15 @@ bool Update(const User &user,string filename,string old_username) {
 	}
 	else if(name=="Record") {
 		for(auto i : user.record) {
-			temp<<user.username<<" "<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.date<<" "<<i.time<<endl;
+			ExtractTime(i.time,false);
+			temp<<user.username<<" "<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.time.timestamp<<endl;
 		}
 	}
 	else if(name=="Budget") {
 		for(auto i : user.budget) {
-			temp<<user.username<<" "<<i.start<<" "<<i.end<<" "<<i.type<<" "<<i.amount<<endl;
+			ExtractTime(i.start,false);
+			ExtractTime(i.end,false);
+			temp<<user.username<<" "<<i.start.timestamp<<" "<<i.end.timestamp<<" "<<i.type<<" "<<i.amount<<endl;
 		}
 	}
 	file.close();
@@ -142,5 +147,20 @@ void Rename(string old_name,string new_name) {
 	remove(new_name.c_str());
 	rename(old_name.c_str(),new_name.c_str());
 	remove(old_name.c_str());
+	return;
+}
+void ExtractTime(Time &time,bool isExtract) {
+	if(isExtract) {
+		time.year=atoi(time.timestamp.substr(4,4).c_str());
+		time.month=atoi(time.timestamp.substr(2,2).c_str());
+		time.day=atoi(time.timestamp.substr(0,2).c_str());
+		time.hour=atoi(time.timestamp.substr(8,2).c_str());
+		time.minute=atoi(time.timestamp.substr(10,2).c_str());
+	}
+	else {
+		char temp[12];
+		sprintf(temp,"%02d%02d%d%02d%02d",time.day,time.month,time.year,time.hour,time.minute);
+		time.timestamp=temp;
+	}
 	return;
 }

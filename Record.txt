@@ -1,4 +1,4 @@
 Record
-JasonChan Cash -50 Food 08032019 1412
-JasonChan Card -30 Game 08032019 1515
-JasonChan Bank 1000 Transaction 15032019 0721
+JasonChan Cash -50 Game 080320200712
+JasonChan Card -30 Game 080320191515
+JasonChan Bank 1000 Transaction 150320190721

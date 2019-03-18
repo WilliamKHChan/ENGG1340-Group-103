@@ -1,5 +1,5 @@
 [Project]
-FileName=Accounting system.dev
+FileName=Accounting_system.dev
 Name=Accounting system
 Type=1
 Ver=2
@@ -29,6 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000000000000
+UnitCount=3
 
 [VersionInfo]
 Major=1
@@ -48,4 +49,34 @@ ProductName=
 ProductVersion=
 AutoIncBuildNr=0
 SyncProduct=1
+
+[Unit1]
+FileName=Accounting_system.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit2]
+FileName=data_manipulation.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit3]
+FileName=data_manipulation.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 

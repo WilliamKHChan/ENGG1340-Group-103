@@ -4,7 +4,19 @@
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
+#include <ctime>
+#include <cstdio>
+#include <iomanip>
 using namespace std;
+class Time {
+public:
+	string timestamp;
+	int year;
+	int month;
+	int day;
+	int hour;
+	int minute;
+};
 class Account {
 public:
 	string name;
@@ -15,13 +27,12 @@ public:
 	string account;
 	double income;
 	string type;
-	string date;
-	string time;
+	Time time;
 };
 class Budget {
 public:
-	string start;
-	string end;
+	Time start;
+	Time end;
 	string type;
 	double amount;
 };
@@ -39,3 +50,4 @@ bool Load(User&,string);
 bool UpdateAll(const User&,vector<string>,string="");
 bool Update(const User&,string,string="");
 void Rename(string,string);
+void ExtractTime(Time&,bool);
