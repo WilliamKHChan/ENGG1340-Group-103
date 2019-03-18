@@ -14,8 +14,8 @@ int main() {
 		}
 		cout<<"\nRecords:\n";
 		for(auto i:user.record) {	// Or for(int i=0;i<user.record.size();i++) { cout<<user.record[i].account ... ; }
-			cout<<i.account<<" "<<i.type<<" "<<i.income<<" "<<i.time.day<<"/"<<i.time.month<<"/"<<i.time.year<<" ";
-			cout<<setfill('0')<<setw(2)<<i.time.hour<<":"<<i.time.minute<<endl;
+			cout<<i.account<<" "<<i.type<<" "<<i.income<<" "<<setfill('0')<<setw(2)<<i.time.day<<"/"<<setfill('0')<<setw(2)<<i.time.month<<"/"<<i.time.year<<" ";
+			cout<<setfill('0')<<setw(2)<<i.time.hour<<":"<<setfill('0')<<setw(2)<<i.time.minute<<endl;
 		}
 		cout<<"\nBudgets:\n";
 		for(auto i:user.budget) {
