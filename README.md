@@ -11,7 +11,7 @@ With the emergence of cashless payment methods, people are less sensitive to how
 \
 **PROPOSAL**:\
 Create a digital financial management tool to manage expenditure. \
-*Functions :* \
+*Functions :* 
   1. Create and view user's accounts (i.e Bank, Cash and Credit card)
   2. Set up and delete categories under each account (i.e. Transportation, Entertainment, Food)
   3. Set a monthly or daily budget for each category (i.e. Monthly budget: Entertainment, Daily budget: Food)
