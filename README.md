@@ -10,4 +10,12 @@ Living in a prosperous and materialistic society, people are not aware of the im
 With the emergence of cashless payment methods, people are less sensitive to how much their payment. They will overspend easily, resulting in huge credit card debts.Therefore, they seldom think about their future regarding their finance. The consequences are inconceivably severe when someone have little knowlegde about how to manage and invest their hard-earned money.\
 \
 **PROPOSAL**:\
-Create a digital financial management tool to manage expenditure. People can set up budgets for different kinds of expenditure  
+Create a digital financial management tool to manage expenditure. \
+*Functions :* \
+  1. Create and view user's accounts (i.e Bank, Cash and Credit card)
+  2. Set up and delete categories under each account (i.e. Transportation, Entertainment, Food)
+  3. Set a monthly or daily budget for each category (i.e. Monthly budget: Entertainment, Daily budget: Food)
+  4. Calucate and show how much the user saved or overspent everyday according to the budgets.
+  5. Provide monthly reports of user's expenditure, which include percentage of each category, warning if over spending, etc.
+  6. Allow any change of the records
+  
