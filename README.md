@@ -57,9 +57,8 @@ Owing to monthly overspending, the result will either be huge credit card debts 
   
   7. Allow any change of the records
   
-*Assumptions:*
-  1. Once an account and a category under the account is created, the user must type the exactly the same name of the accout and      
-     category so that the records can be made.
-     
-  2. The user must type in the correct commands which we will provide a manual of them in order to execute the program properly.
+*Assumptions:*\
+1. Once an account and a category under the account is created, the user must type the exactly the same name of the account and category so that the records can be made.\
+\
+2. The user must type in the correct commands which we will provide a manual of them in order to execute the program properly.\
 
