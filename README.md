@@ -12,40 +12,52 @@ Owing to monthly overspending, the result will either be huge credit card debts 
 ### Problem Setting
 *Functions*:\
   1. Create and view user's accounts (i.e Bank, Cash and Credit card)\
-                    i.e. User1: Bank: $10000\
-                         User1: Cash: $1000\
-                         User1: Credit Card: -$5000\
-\
+  
+                    i.e. User1: Bank: $10000
+                         User1: Cash: $1000
+                         User1: Credit Card: -$5000
+
   2. Set up and delete categories of income or expenses under each account\
-                    i.e. Cash : Transportation, Entertainment, Food\
-                         Bank : Salary Income, House Mortgage\
-                         Credit Card : Instalment of smartphone\
-\
+  
+                    i.e. Cash : Transportation, Entertainment, Food
+                         Bank : Salary Income, House Mortgage
+                         Credit Card : Instalment of smartphone
+
   3. Set a monthly or daily budget for each category\
-                    i.e. Cash: Food-(Daily Budget): $100\
-                         Cash: Entertainemnt-(Monthly Budget): $500\
-\                                                          
+  
+                    i.e. Cash: Food-(Daily Budget): $100
+                         Cash: Entertainemnt-(Monthly Budget): $500
+                                                         
   4. Calucate and show how much does the user save or overspend everyday according to the daily budgets.\
-                    i.e. Food-(Daily Budget): -$70       i.e. Food-(Daily Budget): -$150\
-                         Daily budget saved : $30             Daily budget overspent : $50\
-\
-  5. Calucate and show how much do the monthly budgets of categories left or overspent.\
-                    i.e. Entertainment-(Monthly Budget): -$300       i.e. Entertainment-(Monthly Budget): -$600\
-                         Monthly budget left : $200                       Monthy budget overspent : $100\
-\  
+  
+                    i.e. Food-(Daily Budget): -$70
+                         Daily budget saved : $30
+                       
+                    i.e. Food-(Daily Budget): -$150
+                         Daily budget overspent : $50
+
+  5. Calucate and show how much do the monthly budgets of categories left or overspent.
+  
+                    i.e. Entertainment-(Monthly Budget): -$300
+                         Monthly budget left : $200
+                         
+                    i.e. Entertainment-(Monthly Budget): -$600
+                         Monthy budget overspent : $100
+  
   6. Provide monthly reports of user's expenditure, which include percentage of each category, warning if over spending, etc.\
-                   (Assume this month has 30 days)\
-                    i.e.  Salary Income: +$50000\
-                          Total expenditure on Food: -$6000 (12%) !! Warning: Overspent by $3000 !!\
-                          Total expenditure on Entertainment: -$500 (1%)\
-                          Total expenditure: -$6500 (13%)\
-                          Left: $42500 (87%)\
-\  
+  
+                   (Assume this month has 30 days)
+                    i.e.  Salary Income: +$50000
+                          Total expenditure on Food: -$6000 (12%) !! Warning: Overspent by $3000 !!
+                          Total expenditure on Entertainment: -$500 (1%)
+                          Total expenditure: -$6500 (13%)
+                          Left: $42500 (87%)
+  
   7. Allow any change of the records\
   
-*Assumptions:*\
-  1. Once an account and a category under the account is created, the user must type the exactly the same name of the accout and \     
-     category so that the records can be made.\
+*Assumptions:*
+  1. Once an account and a category under the account is created, the user must type the exactly the same name of the accout and      
+     category so that the records can be made.
      
-  2. The user must type in the correct commands which we will provide a manual of them in order to execute the program properly.\
-\
+  2. The user must type in the correct commands which we will provide a manual of them in order to execute the program properly.
+
