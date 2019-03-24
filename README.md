@@ -48,7 +48,8 @@ Owing to monthly overspending, the result will either be huge credit card debts 
   6. Provide monthly reports of user's expenditure, which include percentage of each category, warning if over spending, etc.
   
                    (Assume this month has 30 days)
-                    i.e.  Salary Income: +$50000
+                    i.e.  April-2019
+                          Salary Income: +$50000
                           Total expenditure on Food: -$6000 (12%) !! Warning: Overspent by $3000 !!
                           Total expenditure on Entertainment: -$500 (1%)
                           Total expenditure: -$6500 (13%)
