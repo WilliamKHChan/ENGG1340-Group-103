@@ -11,7 +11,10 @@ Living in a prosperous and materialistic society, people are not aware of the im
 Owing to monthly overspending, the result will either be huge credit card debts or very little savings. To solve these problems, people may resort to borrow loans from private finance companies to cover previous debts. It is common that people have poor credit ratings owing to the lack of proper finanical management. The consequences are inconceivably severe when someone have little knowlegde about how to manage and invest their hard-earned money.
 
 ### Problem Setting
-*Functions*:
+*Features*:
+To avoid the daunting corollary of neglecting own financail status, one must set budgets for every expense and keep track of the cashflow. In a bid to help people manage their money effectively, we created this tool.
+
+*Functions of the tool*:
   1. Create and view user's accounts (i.e Bank, Cash and Credit card)
   
                     i.e. User1: Bank: $10000
