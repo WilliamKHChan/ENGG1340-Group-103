@@ -7,6 +7,9 @@
 #include <ctime>
 #include <cstdio>
 #include <iomanip>
+#ifndef data_manipulation
+#define data_manipulation 1
+#endif
 using namespace std;
 class Time {
 public:

@@ -116,6 +116,9 @@ bool Update(const User &user,string filename,string old_username) {
 				temp<<line<<endl;
 			}
 		}
+		else if(field!=user.username) {
+			temp<<line<<endl;
+		}
 	}
 	if(name=="Information") {
 		temp<<user.username<<" "<<user.password<<" "<<user.name<<endl;
