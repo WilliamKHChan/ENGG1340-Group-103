@@ -7,6 +7,8 @@
 #include <ctime>
 #include <cstdio>
 #include <iomanip>
+#include <algorithm>
+#include <map>
 #ifndef data_manipulation
 #define data_manipulation 1
 #endif
@@ -30,14 +32,15 @@ public:
 	string account;
 	double income;
 	string type;
-	Time time;
+	Time date;
 };
 class Budget {
 public:
-	Time start;
-	Time end;
+	string period;
+	Time date;
 	string type;
 	double amount;
+	double remain;
 };
 class User {
 public:
@@ -54,3 +57,5 @@ bool UpdateAll(const User&,vector<string>,string="");
 bool Update(const User&,string,string="");
 void Rename(string,string);
 void ExtractTime(Time&,bool);
+void GetCurrentTime(Time&);
+void InputBudget(Budget&);

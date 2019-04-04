@@ -5,3 +5,6 @@ void LoginScreen(User&,vector<string>);
 void Login(User&,vector<string>);
 void CreateAccount(User&,vector<string>);
 void MainMenu(User&,vector<string>);
+void SetBudget(User&,vector<string>);
+void ShowReport(User&,vector<string>);
+

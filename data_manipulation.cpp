@@ -61,8 +61,8 @@ bool Load(User &user,string filename) {
 				iss>>field;
 				rd.income=atof(field.c_str());
 				iss>>rd.type;
-				iss>>rd.time.timestamp;
-				ExtractTime(rd.time,true);
+				iss>>rd.date.timestamp;
+				ExtractTime(rd.date,true);
 				user.record.push_back(rd);
 			}
 		}
@@ -74,13 +74,14 @@ bool Load(User &user,string filename) {
 			iss>>field;
 			if(field==user.username) {
 				Budget bg;
-				iss>>bg.start.timestamp;
-				iss>>bg.end.timestamp;
+				iss>>bg.period;
+				iss>>bg.date.timestamp;
 				iss>>bg.type;
 				iss>>field;
 				bg.amount=atof(field.c_str());
-				ExtractTime(bg.start,true);
-				ExtractTime(bg.end,true);
+				iss>>field;
+				bg.remain=atof(field.c_str());
+				ExtractTime(bg.date,true);
 				user.budget.push_back(bg);
 			}
 		}
@@ -130,15 +131,14 @@ bool Update(const User &user,string filename,string old_username) {
 	}
 	else if(name=="Record") {
 		for(auto i : user.record) {
-			ExtractTime(i.time,false);
-			temp<<user.username<<" "<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.time.timestamp<<endl;
+			ExtractTime(i.date,false);
+			temp<<user.username<<" "<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.date.timestamp<<endl;
 		}
 	}
 	else if(name=="Budget") {
 		for(auto i : user.budget) {
-			ExtractTime(i.start,false);
-			ExtractTime(i.end,false);
-			temp<<user.username<<" "<<i.start.timestamp<<" "<<i.end.timestamp<<" "<<i.type<<" "<<i.amount<<endl;
+			ExtractTime(i.date,false);
+			temp<<user.username<<" "<<i.period<<" "<<i.date.timestamp<<" "<<i.type<<" "<<i.amount<<" "<<i.remain<<endl;
 		}
 	}
 	file.close();
@@ -165,5 +165,24 @@ void ExtractTime(Time &time,bool isExtract) {
 		sprintf(temp,"%02d%02d%d%02d%02d",time.day,time.month,time.year,time.hour,time.minute);
 		time.timestamp=temp;
 	}
+	return;
+}
+void GetCurrentTime(Time &date) {
+	time_t now=time(0);
+	tm *ltm=localtime(&now);
+	date.year=1900+ltm->tm_year;
+	date.month=1+ltm->tm_mon;
+	date.day=ltm->tm_mday;
+	date.hour=ltm->tm_hour;
+	date.minute=ltm->tm_min;
+	ExtractTime(date,false);
+	return;
+}
+void InputBudget(Budget &budget) {
+	cin>>budget.period;
+	cin>>budget.type;
+	cin>>budget.amount;
+	budget.remain=budget.amount;
+	GetCurrentTime(budget.date);
 	return;
 }

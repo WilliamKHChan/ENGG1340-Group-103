@@ -1,4 +1,7 @@
 Record
-JasonChan Cash -50 Game 080320200712
-JasonChan Card -30 Game 080320191515
+User0001 Bank 100 Salary 070320191411
+User0001 Bank -1000 Transaction	070820190720
+JasonChan Cash -50 Food 080320190712
+JasonChan Card -30.5 Game 080320191515
+JasonChan Cash -1000 Transportation 080320190000
 JasonChan Bank 1000 Transaction 150320190721
