@@ -10,6 +10,9 @@ void Login(User &user,vector<string> database) {
 		if(!success) {
 			cout<<"Invalid.\n";
 		}
+		else {
+			RenewBudget(user.budget);
+		}
 	}
 	while(!success);
 }
@@ -67,7 +70,7 @@ void MainMenu(User &user,vector<string> database) {
 	do {
 		cin.clear();
 		cin.sync();
-		cout<<"\n4. Set budgets\t5. Show report\n7. Exit\n\n";
+		cout<<"\n4. Set budgets\t\t5. Show report\n6. Change password\t7. Exit\n\n";
 		cout<<"Please enter your choice: ";
 		cin>>choice;
 		switch(choice) {
@@ -78,9 +81,12 @@ void MainMenu(User &user,vector<string> database) {
 			case 5:
 				ShowReport(user,database);
 				break;
+			case 6:
+				ChangePassword(user,database);
 			case 7:
 				break;
 			default:
+				cout<<"Invalid.\n";
 				break;
 		}
 	}
@@ -105,11 +111,11 @@ void SetBudget(User &user,vector<string> database) {
 					break;
 				}
 				for(auto i:user.budget) {
-					cout<<i.period<<"\t"<<i.type<<"\tBudget: $"<<i.amount<<"\tRemain: $"<<i.remain<<endl;
+					cout<<i.type<<" ("<<i.period<<"): $"<<i.amount<<" Remain: $"<<i.remain<<endl;
 				}
 				break;
 			case 2:
-				cout<<"Please enter period, type, amount: ";
+				cout<<"Please enter period, category and amount: ";
 				InputBudget(bg);
 				user.budget.push_back(bg);
 				break;
@@ -121,7 +127,7 @@ void SetBudget(User &user,vector<string> database) {
 				count=1;
 				cout<<endl;
 				for(auto &i:user.budget) {
-					cout<<count<<". "<<i.period<<" "<<i.type<<" "<<i.amount<<endl;
+					cout<<count<<". "<<i.type<<" ("<<i.period<<"): $"<<i.amount<<endl;
 					count++;
 				}
 				cout<<"\nPlease choose: ";
@@ -165,7 +171,7 @@ void ShowReport(User &user,vector<string> database) {
 	int l,u;
 	bool showBudget=false;
 	double income=0,expense=0;
-	map<string,double> category;
+	map<string,double> category,account;
 	cout<<"Please enter the date (DDMMYYYY/MMYYYY): ";
 	cin>>date;
 	if(date.length()==8) {
@@ -176,7 +182,7 @@ void ShowReport(User &user,vector<string> database) {
 		l=2;
 		u=6;
 	}
-	for(auto& i : user.record) {
+	for(auto &i : user.record) {
 		if(i.date.timestamp.substr(l,u)==date) {
 			if(i.income>=0) {
 				income+=i.income;
@@ -204,21 +210,57 @@ void ShowReport(User &user,vector<string> database) {
 	cout.setf(ios::fixed,ios::floatfield);
 	cout.setf(ios::showpoint);
 	cout<<setprecision(1);
-	cout<<"Summary:\nTotal income: $"<<income<<endl;
+	cout<<"Accounts:\n";
+	for(auto &i : user.account) {
+		cout<<i.name<<": $"<<i.amount<<endl;
+	}
+	cout<<"\nSummary:\nTotal income: $"<<income<<endl;
 	cout<<"Total expense: $"<<expense<<endl;
 	cout<<"Net income: $"<<income-expense<<endl;
 	cout<<"\nExpense by category:\n";
-	for(auto &i : category) {
-		cout<<i.first<<": $"<<i.second<<" ("<<(i.second/expense*100)<<"%)"<<endl;
+	if(category.empty()) {
+		cout<<"Empty\n";
+	}
+	else {
+		for(auto &i : category) {
+			cout<<i.first<<": $"<<i.second<<" ("<<(i.second/expense*100)<<"%)"<<endl;
+		}
 	}
 	cout<<endl;
 	GetCurrentTime(now);
-	/*if(now.timestamp.substr(l,u)==date) {
-		showBudget=true;
-		for(auto &i : user.budget) {
-			if
-	}*/
-
+	if(now.timestamp.substr(l,u)==date) {
+		cout<<"Budgets:\n";
+		if(user.budget.empty()) {
+			cout<<"Empty\n";
+		}
+		else {
+			for(auto &i : user.budget) {
+				if(l==0 && i.period=="Monthly") {
+					continue;
+				}
+				cout<<i.type<<" ("<<i.period<<"): $"<<i.amount<<" Remain: $"<<i.remain;
+				if(i.remain<0) {
+					cout<<" Overspent warning!";
+				}
+				cout<<endl;
+			}
+		}
+	}
 	return;
 }
-	
+void ChangePassword(User &user,vector<string> database) {
+	string password,confirm;
+	do {
+		cout<<"Enter new password: ";
+		cin>>password;
+		cout<<"Re-enter new password: ";
+		cin>>confirm;
+		if(confirm!=password) {
+			cout<<"Not match.\n";
+		}
+	}
+	while(password!=confirm);
+	user.password=password;
+	Update(user,database[0]);
+	return;
+}

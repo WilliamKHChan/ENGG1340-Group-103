@@ -1,4 +1,4 @@
 Budget
 AngelWen Daily 040420191123 Food 10000 10000
-JasonChan Daily 030420190000 Game 1000 50
-JasonChan Daily 040420191312 Food 1000 1000
+JasonChan Daily 040420191423 Game 1000 1000
+JasonChan Monthly 040420191423 Food 1000 1000

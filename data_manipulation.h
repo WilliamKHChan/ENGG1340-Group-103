@@ -59,3 +59,4 @@ void Rename(string,string);
 void ExtractTime(Time&,bool);
 void GetCurrentTime(Time&);
 void InputBudget(Budget&);
+void RenewBudget(vector<Budget>&);

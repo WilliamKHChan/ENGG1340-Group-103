@@ -186,3 +186,20 @@ void InputBudget(Budget &budget) {
 	GetCurrentTime(budget.date);
 	return;
 }
+void RenewBudget(vector<Budget> &budget) {
+	Time date;
+	GetCurrentTime(date);
+	for(auto &i : budget) {
+		if(i.period=="Daily" && i.date.timestamp.substr(0,8)!=date.timestamp.substr(0,8)) {
+			i.remain=i.amount;
+			i.date.timestamp=date.timestamp;
+			ExtractTime(i.date,true);
+		}
+		else if(i.period=="Monthly" && i.date.timestamp.substr(2,6)!=date.timestamp.substr(0,8)) {
+			i.remain=i.amount;
+			i.date.timestamp=date.timestamp;
+			ExtractTime(i.date,true);
+		}
+	}
+	return;
+}
