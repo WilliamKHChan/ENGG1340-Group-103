@@ -24,14 +24,13 @@ void CreateAccount(User &user,vector<string> database) {
 		cin.sync();
 		success=true;
 		cout<<"Username: ";
-		getline(cin,user.username);
+		cin>>user.username;
 		cout<<"Password: ";
 		cin>>user.password;
 		cout<<"Re-type password: ";
 		cin>>password;
 		cout<<"Name: ";
-		cin.clear();
-		cin.sync();
+		cin.ignore();
 		getline(cin,user.name);
 		if(password!=user.password) {
 			cout<<"Password not match.\n";

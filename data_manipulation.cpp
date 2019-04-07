@@ -15,7 +15,7 @@ bool Load(User &user,string filename) {
 	if(file.fail()) {
 		exit(1);
 	}
-	getline(file,line);
+	file>>line;
 	if(line=="Information") {
 		while(getline(file,line)) {
 			istringstream iss(line);
@@ -104,8 +104,8 @@ bool Update(const User &user,string filename,string old_username) {
 	if(file.fail() || temp.fail()) {
 		exit(1);
 	}
-	getline(file,name);
-	temp<<name<<endl;
+	file>>name;
+	temp<<name;
 	while(getline(file,line)) {
 		istringstream iss(line);
 		iss>>field;
