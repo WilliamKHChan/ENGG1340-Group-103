@@ -98,7 +98,7 @@ void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;
 	Budget bg;
 	do {
-		cout<<"\n1 View budgets\t\t2 Add budget\t3 Change budget\n4 Delete budget\t5 Save & back\n\n";
+		cout<<"\n1 View budgets\t2 Add budget\n3 Change budget\t4 Delete budget\n5 Save & back\n\n";
 		cout<<"Please enter your choice: ";
 		cin>>choice;
 		switch(choice) {
