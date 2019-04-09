@@ -47,7 +47,7 @@ void CreateAccount(User &user,vector<string> database) {
 }
 void LoginScreen(User &user,vector<string> database) {
 	int choice;
-	cout<<"Welcome!\n\n1. Login\t2. New account\n\nPlease enter your choice: ";
+	cout<<"Welcome!\n\n1 Login\t\t2 New account\n\nPlease enter your choice: ";
 	do {
 		cin>>choice;
 		if(choice<1 || choice>2) {
@@ -69,34 +69,36 @@ void MainMenu(User &user,vector<string> database) {
 	do {
 		cin.clear();
 		cin.sync();
-		cout<<"\n4. Set budgets\t\t5. Show report\n6. Change password\t7. Exit\n\n";
+		cout<<"\n1 Create Account\t2 Delete Account\n3 View Account\t\t4 Add Record";
+		cout<<"\n5 Delete Record\t\t6 View Record";
+		cout<<"\n7 Set Budgets\t\t8 Show Report\n9 Change Password\t10 Exit\n\n";
 		cout<<"Please enter your choice: ";
 		cin>>choice;
 		switch(choice) {
-			case 4:
+			case 7:
 				SetBudget(user,database);
 				Update(user,database[3]);
 				break;
-			case 5:
+			case 8:
 				ShowReport(user,database);
 				break;
-			case 6:
+			case 9:
 				ChangePassword(user,database);
-			case 7:
+			case 10:
 				break;
 			default:
 				cout<<"Invalid.\n";
 				break;
 		}
 	}
-	while(choice!=7);
+	while(choice!=10);
 	return;
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;
 	Budget bg;
 	do {
-		cout<<"\n1. View budgets\t\t2. Add budget\t3. Change budget\n4. Delete budget\t5. Save & back\n\n";
+		cout<<"\n1 View budgets\t\t2 Add budget\t3 Change budget\n4 Delete budget\t5 Save & back\n\n";
 		cout<<"Please enter your choice: ";
 		cin>>choice;
 		switch(choice) {
