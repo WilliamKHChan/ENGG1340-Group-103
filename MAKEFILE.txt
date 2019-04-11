@@ -1,6 +1,0 @@
-data_manipulation.o: data_manipulation.cpp data_manipulation.h
-	g++ -c $<
-Accounting_system.o: Accounting_system.cpp data_manipulation.h
-	g++ -c $<
-Accounting_system: data_manipulation.o Accounting_system.o
-	g++ $^ -o $@
