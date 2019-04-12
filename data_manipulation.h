@@ -55,6 +55,7 @@ bool LoadAll(User&,vector<string>);
 bool Load(User&,string);
 bool UpdateAll(const User&,vector<string>,string="");
 bool Update(const User&,string,string="");
+void Create_ACCT(User&,string);
 void Rename(string,string);
 void ExtractTime(Time&,bool);
 void GetCurrentTime(Time&);

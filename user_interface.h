@@ -8,4 +8,3 @@ void MainMenu(User&,vector<string>);
 void SetBudget(User&,vector<string>);
 void ShowReport(User&,vector<string>);
 void ChangePassword(User&,vector<string>);
-
