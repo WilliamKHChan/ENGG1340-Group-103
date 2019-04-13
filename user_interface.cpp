@@ -81,8 +81,10 @@ void MainMenu(User &user,vector<string> database) {
 				Delete_ACCT(user,database[1]);
 				break;
 			case 3:
+				View_ACCT(user,database[1]);
 				break;
 			case 4:
+				Add_Record(user,database[2]);
 				break;
 			case 5:
 				break;
@@ -107,27 +109,58 @@ void MainMenu(User &user,vector<string> database) {
 	while(choice!=10);
 	return;
 }
-void Create_ACCT(User &user,string database) {   ////////
-	string ACCT_type;
+void Create_ACCT(User &user,string database) {
+	string ACCT_type, line, data, choice;
 	int Amount;
-	cout<<"Please enter (Account type) and (Amount): ";
+	cout<<"Please enter (Account type) (Amount): ";
 	cin >> ACCT_type >> Amount;
-	cout<<"\n"<<user.username;
-	ofstream fout(database);
-	if (fout.fail()) {
+	ifstream fin(database);
+	ofstream fout;
+	fout.open(database, ios::app);
+	if (fout.fail()||fin.fail())
 		exit(1);
+	while (getline(fin,line)) {
+		istringstream iss(line);
+		iss>>data;   // data = an username in Account.txt
+		if (data==user.username) {
+			iss>>data; // data = an account of the user
+			if (ACCT_type==data) {
+				cout<<"\nThere is a same account.\nDo you want to replace it ?\n";
+				cout<<"Type (Yes/Exit) : ";
+				cin>>choice;
+				//if (choie=="Yes")
+			}
+		}
 	}
-	fout<<user.username<<' '<<ACCT_type<<' '<<Amount;
+	//fout<<user.username<<' '<<ACCT_type<<' '<<Amount<<endl;
 	fout.close();
+	fin.close();
 }
 void Delete_ACCT(User &user,string database) {
-	
+
+}
+void View_ACCT(User &user,string database) {
+	string line,username;
+	ifstream fin(database);
+	if (fin.fail())
+		exit(1);
+	while (getline(fin,line)){
+		istringstream iss(line);
+		iss>>username;
+		if (username==user.username){
+			cout<<line<<endl;
+		}
+	}
+	fin.close();
+}
+void Add_Record(User &user,string database){
+
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;
 	Budget bg;
 	do {
-		cout<<"\n1. View budgets\t\t2. Add budget\t3. Change budget\n4. Delete budget\t5. Save & back\n\n";
+		cout<<"\n1 View budgets\t\t2 Add budget\t3 Change budget\n4 Delete budget\t5 Save & back\n\n";
 		cout<<"Please enter your choice: ";
 		cin>>choice;
 		switch(choice) {
@@ -145,7 +178,7 @@ void SetBudget(User &user,vector<string> database) {
 				}
 				break;
 			case 2:
-				cout<<"Please enter (Daily/Monthly), (Category) and (Amount): ";
+				cout<<"Please enter (Daily/Monthly) (Category) (Amount): ";
 				InputBudget(bg);
 				user.budget.push_back(bg);
 				break;
