@@ -96,11 +96,13 @@ void MainMenu(User &user,vector<string> database) {
 	while(choice!=10);
 	return;
 }
-void Create_ACCT(User &user,string database)
-{
+void Create_ACCT(User &user,string database) {
 	string ACCT_type;
-	cout<<"\nPlease enter Account type and Amount";
-	cin >> ACCT_type;
+	int Amount;
+	cout<<"Please enter (Account type) and (Amount): ";
+	cin >> ACCT_type >> Amount;
+	cout<<"\n"<<user.username;
+	//UpdateAccount(user.username, ACCT_type, Amount);
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;
@@ -124,7 +126,7 @@ void SetBudget(User &user,vector<string> database) {
 				}
 				break;
 			case 2:
-				cout<<"Please enter period, category and amount: ";
+				cout<<"Please enter (Daily/Monthly), (Category) and (Amount): ";
 				InputBudget(bg);
 				user.budget.push_back(bg);
 				break;
