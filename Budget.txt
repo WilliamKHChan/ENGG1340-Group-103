@@ -1,4 +1,6 @@
 Budget
+UserName Period DDMMYYYY0000 Type Amount Remain
+
 AngelWen Daily 040420191123 Food 10000 10000
 JasonChan Daily 070420191917 Game 1000 1000
 JasonChan Monthly 070420191917 Food 1000 1000

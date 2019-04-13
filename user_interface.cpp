@@ -6,7 +6,7 @@ void Login(User &user,vector<string> database) {
 		cin>>user.username;
 		cout<<"Password: ";
 		cin>>user.password;
-		success=LoadAll(user,database);
+		success=LoadAll(user,database); // Login success ? -> Get username
 		if(!success) {
 			cout<<"Invalid.\n";
 		}
@@ -77,6 +77,17 @@ void MainMenu(User &user,vector<string> database) {
 			case 1:
 				Create_ACCT(user,database[1]);
 				break;
+			case 2:
+				Delete_ACCT(user,database[1]);
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
 			case 7:
 				SetBudget(user,database);
 				Update(user,database[3]);
@@ -96,13 +107,21 @@ void MainMenu(User &user,vector<string> database) {
 	while(choice!=10);
 	return;
 }
-void Create_ACCT(User &user,string database) {
+void Create_ACCT(User &user,string database) {   ////////
 	string ACCT_type;
 	int Amount;
 	cout<<"Please enter (Account type) and (Amount): ";
 	cin >> ACCT_type >> Amount;
 	cout<<"\n"<<user.username;
-	//UpdateAccount(user.username, ACCT_type, Amount);
+	ofstream fout(database);
+	if (fout.fail()) {
+		exit(1);
+	}
+	fout<<user.username<<' '<<ACCT_type<<' '<<Amount;
+	fout.close();
+}
+void Delete_ACCT(User &user,string database) {
+	
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;

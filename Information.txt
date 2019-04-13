@@ -1,4 +1,6 @@
 Information
+Username Password Name_ID
+
 User0001 user1 Chow Siu Ming
 AngelWen angel Wen Sin Yi
 abc abc asd
