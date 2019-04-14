@@ -4,5 +4,6 @@ UserName|Period|DDMMYYYYTime|Type|BudgetAmount|Remain
 AngelWen Daily 040420191123 Food 10000 10000
 JasonChan Daily 070420191917 Game 1000 1000
 JasonChan Monthly 070420191917 Food 1000 1000
-illiam Daily 070420191940 Game 1000 1000
-Nelson Daily 130420192232 Food 100 100
+William Daily 070420191940 Game 1000 1000
+Nelson Daily 140420191448 Food 100 100
+Nelson Monthly 140420191450 Entertainment 680 680

@@ -7,11 +7,11 @@ void Login(User &user,vector<string> database) {
 		cout<<"Password: ";
 		cin>>user.password;
 		success=LoadAll(user,database); // True : Get all info of the user
-		if(!success) {
+		if(!success) {                  // Login fail
 			cout<<"Invalid.\n";
 		}
-		else {
-			RenewBudget(user.budget);
+		else {													// Login succeed
+			RenewBudget(user.budget);     // Update data for calcualtion
 		}
 	}
 	while(!success);
@@ -111,7 +111,7 @@ void MainMenu(User &user,vector<string> database) {
 }
 void Create_ACCT(User &user,string database) {
 	string ACCT_type, line, data, choice;
-	int Amount;
+	double Amount;
 	cout<<"Please enter (Account type) (Amount): ";
 	cin >> ACCT_type >> Amount;
 	ifstream fin(database);
@@ -125,14 +125,32 @@ void Create_ACCT(User &user,string database) {
 		if (data==user.username) {
 			iss>>data; // data = an account of the user
 			if (ACCT_type==data) {
-				cout<<"\nThere is a same account.\nDo you want to replace it ?\n";
-				cout<<"1 Yes\t2 No and Exit --> ";
+				cout<<"\nAccount already exits. Do you want to replace it ?\n";
+				cout<<"1 Yes\t2 No and Exit\nPlease enter your choice : ";
 				cin>>choice;
-				//if (choie=="Yes")
+				if (choice=="1") {
+					int pos=0;
+					for (auto i : user.account) {
+						if (i.name==ACCT_type)
+							user.account.erase(user.account.begin()+pos);
+						pos++;
+					}
+					Account ACCT;
+					ACCT.name=ACCT_type;
+					ACCT.amount=Amount;
+					user.account.push_back(ACCT);
+					for (auto i : user.account) {
+						cout<<i.name<<' '<<i.amount<<endl;
+					}
+					Update(user,database);
+				}
+
 			}
+			else
+				fout<<user.username<<' '<<ACCT_type<<' '<<Amount<<endl;
 		}
 	}
-	//fout<<user.username<<' '<<ACCT_type<<' '<<Amount<<endl;
+
 	fout.close();
 	fin.close();
 }
@@ -160,7 +178,8 @@ void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;
 	Budget bg;
 	do {
-		cout<<"\n1 View budgets\t\t2 Add budget\t3 Change budget\n4 Delete budget\t5 Save & back\n\n";
+		cout<<"\n1 View budgets\t\t2 Add budget\t3 Change budget";
+		cout<<"\n4 Delete budget\t\t5 Save & back\n\n";
 		cout<<"Please enter your choice: ";
 		cin>>choice;
 		switch(choice) {
