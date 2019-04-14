@@ -128,7 +128,6 @@ bool Update(const User &user,string filename,string old_username) {
 	}
 	else if(name=="Account") {
 		for(auto i : user.account) {
-			cout<<user.username<<" "<<i.name<<" "<<i.amount<<endl;
 			temp<<user.username<<" "<<i.name<<" "<<i.amount<<endl;
 		}
 	}
@@ -150,9 +149,16 @@ bool Update(const User &user,string filename,string old_username) {
 	return true;
 }
 void Rename(string old_name,string new_name) {
-	remove(new_name.c_str());
-	rename(old_name.c_str(),new_name.c_str());
-	remove(old_name.c_str());
+	if (remove(new_name.c_str())==0)
+		cout<<"Remove succeed !\n";
+	else
+		cout<<"Remove fail !\n";
+
+	if (rename(old_name.c_str(),"Account.txt")==0)
+		cout<<"Rename succeed !\n";
+	else
+		cout<<"Rename fail !\n";
+	//remove(old_name.c_str());
 	return;
 }
 void ExtractTime(Time &time,bool isExtract) { // Convert string into int

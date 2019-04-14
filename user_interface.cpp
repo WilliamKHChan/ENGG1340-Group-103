@@ -147,11 +147,12 @@ void Create_ACCT(User &user,string database) {
 				}
 
 			}
-			else
+			else {
+				cout<<"Write into Account.txt"<<endl;
 				fout<<user.username<<' '<<ACCT_type<<' '<<Amount<<endl;
-		}
+			}
+  	}
 	}
-
 	fout.close();
 	fin.close();
 }

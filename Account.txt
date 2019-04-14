@@ -7,4 +7,3 @@ JasonChan Card 5000
 JasonChan Cash 9000
 Nelson Investment 80000
 Nelson Bank 20000
-Nelson Bank 25555
