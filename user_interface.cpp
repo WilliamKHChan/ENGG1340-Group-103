@@ -143,6 +143,7 @@ void Create_ACCT(User &user,string database) {
 						cout<<i.name<<' '<<i.amount<<endl;
 					}
 					Update(user,database);
+					break;
 				}
 
 			}
