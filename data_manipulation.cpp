@@ -88,6 +88,7 @@ bool Load(User &user,string filename) {
 		flag=true;
 	}
 	return flag;
+	file.close();
 }
 bool UpdateAll(const User &user,vector<string> filename,string old_username) {
 	for(auto i : filename) {

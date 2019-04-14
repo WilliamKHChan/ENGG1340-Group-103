@@ -6,7 +6,7 @@ void Login(User &user,vector<string> database) {
 		cin>>user.username;
 		cout<<"Password: ";
 		cin>>user.password;
-		success=LoadAll(user,database); // Login success ? -> Get username
+		success=LoadAll(user,database); // True : Get all info of the user
 		if(!success) {
 			cout<<"Invalid.\n";
 		}
@@ -126,7 +126,7 @@ void Create_ACCT(User &user,string database) {
 			iss>>data; // data = an account of the user
 			if (ACCT_type==data) {
 				cout<<"\nThere is a same account.\nDo you want to replace it ?\n";
-				cout<<"Type (Yes/Exit) : ";
+				cout<<"1 Yes\t2 No and Exit --> ";
 				cin>>choice;
 				//if (choie=="Yes")
 			}
