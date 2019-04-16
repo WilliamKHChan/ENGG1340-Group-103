@@ -160,12 +160,13 @@ void ExtractTime(Time &time,bool isExtract) { // Convert string into int
 		time.year=atoi(time.timestamp.substr(4,4).c_str());
 		time.month=atoi(time.timestamp.substr(2,2).c_str());
 		time.day=atoi(time.timestamp.substr(0,2).c_str());
-		time.hour=atoi(time.timestamp.substr(8,2).c_str());
-		time.minute=atoi(time.timestamp.substr(10,2).c_str());
+		time.hour=atoi(time.timestamp.substr(10,2).c_str());
+		time.minute=atoi(time.timestamp.substr(8,2).c_str());
+		time.wday=atoi(time.timestamp.substr(12,1).c_str());
 	}
 	else {
 		char temp[12];
-		sprintf(temp,"%02d%02d%d%02d%02d",time.day,time.month,time.year,time.hour,time.minute);
+		sprintf(temp,"%02d%02d%d%02d%02d%01d",time.day,time.month,time.year,time.hour,time.minute,time.wday);
 		time.timestamp=temp;
 	}
 	return;
@@ -178,8 +179,34 @@ void GetCurrentTime(Time &date) {
 	date.day=ltm->tm_mday;
 	date.hour=ltm->tm_hour;
 	date.minute=ltm->tm_min;
+	date.wday=ltm->tm_wday;
 	ExtractTime(date,false);
 	return;
+}
+string Identify_Weekday(int day) {
+	switch (day) {
+		case 0:
+			return "Sun";
+			break;
+		case 1:
+			return "Mon";
+			break;
+		case 2:
+			return "Tue";
+			break;
+		case 3:
+			return "Wed";
+			break;
+		case 4:
+			return "Thu";
+			break;
+		case 5:
+			return "Fri";
+			break;
+		case 6:
+			return "Sat";
+			break;
+	}
 }
 void InputBudget(Budget &budget) {
 	cin>>budget.period;

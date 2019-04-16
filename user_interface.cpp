@@ -69,11 +69,13 @@ void MainMenu(User &user,vector<string> database) {
 	do {
 		cin.clear();
 		cin.sync();
+		cout<<"========================================";
 		cout<<"\n1 Create Account\t2 Delete Account\n3 View Account\t\t4 Add Record";
-		cout<<"\n5 Delete Record\t\t6 View Record";
-		cout<<"\n7 Set Budgets\t\t8 Show Report\n9 Change Password\t10 Exit\n\n";
+		cout<<"\n5 Delete Record\t\t6 View Record\n7 Set Auto-Record";
+		cout<<"\t8 Set Budgets\n9 Show Report\t\t10 Change Password\n11 Exit\n";
 		cout<<"Please enter your choice : ";
 		cin>>choice;
+		cout<<"========================================\n";
 		switch(choice) {
 			case 1:
 				Create_ACCT(user,database[1]);
@@ -91,25 +93,27 @@ void MainMenu(User &user,vector<string> database) {
 				Delete_Record(user,database[2]);
 				break;
 			case 6:
-				View_Database(user,database[2]);
+				View_Record(user,database[2]);
 				break;
 			case 7:
+				break;
+			case 8:
 				SetBudget(user,database);
 				Update(user,database[3]);
 				break;
-			case 8:
+			case 9:
 				ShowReport(user,database);
 				break;
-			case 9:
-				ChangePassword(user,database);
 			case 10:
+				ChangePassword(user,database);
+			case 11:
 				break;
 			default:
 				cout<<"Invalid.\n";
 				break;
 		}
 	}
-	while(choice!=10);
+	while(choice!=11);
 	return;
 }
 void Create_ACCT(User &user,string database) {
@@ -187,7 +191,7 @@ void View_Database(User &user,string database) {
 		istringstream iss(line);
 		iss>>username;
 		if (username==user.username) {
-			cout<<num<<" "<<line<<endl;
+			cout<<"\t\t"<<num<<" "<<line<<endl;
 			num++;
 		}
 	}
@@ -220,20 +224,40 @@ void Delete_Record(User &user,string database) {
 	Update(user,database);
 }
 void View_Record(User &user,string database) {
+	int turn=1;
 	ifstream fin(database);
 	if (fin.fail())
 		exit(1);
-	cout<<"For Monthly Record, enter MMYYYY\n";
-	cout<<"For Daily Record, enter DDMMYYYY\n";
+	cout<<"For Monthly Record: Enter MMYYYY\n";
+	cout<<"For Daily Record: Enter DDMMYYYY\n";
 	cout<<"Enter : ";
-	string date, line;
+	string date,line,data,weekday;
+	Time DATE;
 	cin>>date;
 	if (date.length()==8) { // Daily
-		while (getline())
-	}
-	else if(date.length()==6) { // Monthly
+		while (getline(fin,line)) {
+			if (turn>3) {
+				int pos=line.rfind(" ")+1;
+				DATE.timestamp=line.substr(pos);
+				data=DATE.timestamp.substr(0,8);
+				if (data==date) {
+					//cout<<"DATE.timestamp = "<<DATE.timestamp<<endl;
+					//cout<<"Matched Date = "<<data<<endl;
+					data=DATE.timestamp.substr(0,13);
+					//cout<<"data = "<<data<<endl;
+					ExtractTime(DATE,true);
+					weekday=Identify_Weekday(DATE.wday);
+					cout<<left<<setw(30)<<line.substr(0,line.rfind(" "))<<' ';
+					cout<<DATE.day<<'/'<<DATE.month<<'/'<<DATE.year<<'-';
+					cout<<DATE.minute<<":"<<DATE.hour<<' '<<weekday<<endl;
+				}
+			}
+			turn++;
+		}
 
 	}
+	fin.close();
+	return;
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;

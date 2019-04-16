@@ -21,6 +21,7 @@ public:
 	int day;
 	int hour;
 	int minute;
+	int wday;
 };
 class Account {
 public:
@@ -55,12 +56,7 @@ bool LoadAll(User&,vector<string>);
 bool Load(User&,string);
 bool UpdateAll(const User&,vector<string>,string="");
 bool Update(const User&,string,string="");
-void Create_ACCT(User&,string);
-void Delete_ACCT(User&,string);
-void View_Database(User&,string);
-void Add_Record(User&,string);
-void Delete_Record(User&,string);
-void View_Record(User&,string);
+string Identify_Weekday(int);
 void Rename(string,string);
 void ExtractTime(Time&,bool);
 void GetCurrentTime(Time&);
