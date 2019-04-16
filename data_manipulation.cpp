@@ -127,9 +127,8 @@ bool Update(const User &user,string filename,string old_username) {
 		temp<<user.username<<" "<<user.password<<" "<<user.name<<endl;
 	}
 	else if(name=="Account") {
-		for(auto i : user.account) {
+		for(auto i : user.account)
 			temp<<user.username<<" "<<i.name<<" "<<i.amount<<endl;
-		}
 	}
 	else if(name=="Record") {
 		for(auto i : user.record) {

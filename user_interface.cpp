@@ -72,6 +72,7 @@ void MainMenu(User &user,vector<string> database) {
 		cout<<"\n1 Create Account\t2 Delete Account\n3 View Account\t\t4 Add Record";
 		cout<<"\n5 Delete Record\t\t6 View Record";
 		cout<<"\n7 Set Budgets\t\t8 Show Report\n9 Change Password\t10 Exit\n\n";
+		cout<<"Please enter your choice : ";
 		cin>>choice;
 		switch(choice) {
 			case 1:
@@ -142,9 +143,8 @@ void Create_ACCT(User &user,string database) {
 					ACCT.name=ACCT_type;
 					ACCT.amount=Amount;
 					user.account.push_back(ACCT);
-					for (auto i : user.account) {
-						cout<<i.name<<' '<<i.amount<<endl;
-					}
+					//for (auto i : user.account)
+						//cout<<i.name<<' '<<i.amount<<endl;
 					fout.close();
 					fin.close();
 					Update(user,database);
@@ -164,24 +164,46 @@ void Create_ACCT(User &user,string database) {
   }
 }
 void Delete_ACCT(User &user,string database) {
-
+	View_ACCT(user,database);
+	int Account;
+	cout<<"Please enter the Account to be deleted : ";
+	cin>>Account;
+	cout<<"Delete Account "<<Account<<endl;
+	Account-=1;
+	user.account.erase(user.account.begin()+Account);
+	//for (auto i : user.account)
+		//cout<<i.name<<' '<<i.amount<<endl;
+	Update(user,database);
 }
 void View_ACCT(User &user,string database) {
 	string line,username;
+	int num=1;
 	ifstream fin(database);
 	if (fin.fail())
 		exit(1);
 	while (getline(fin,line)){
 		istringstream iss(line);
 		iss>>username;
-		if (username==user.username){
-			cout<<line<<endl;
+		if (username==user.username) {
+			cout<<num<<" "<<line<<endl;
+			num++;
 		}
 	}
 	fin.close();
 }
-void Add_Record(User &user,string database){
-
+void Add_Record(User &user,string database) {
+	string Account,Amount,Category;
+	Time date;
+	GetCurrentTime(date);
+	cout<<"Please enter (Account) (+/-Amount) (Category) : ";
+	cin>>Account>>Amount>>Category;
+	ofstream fout;
+	fout.open(database, ios::app);
+	if (fout.fail())
+		exit(1);
+	fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
+	fout<<date.timestamp<<endl;
+	fout.close();
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;

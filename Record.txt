@@ -1,9 +1,10 @@
 Record
 Username|Account|Amount|Category|Timestamp
 
-User0001 Bank 100 Salary 070320191411
+User0001 Bank +100 Salary 070320191411
 User0001 Bank -1000 Transaction	070820190720
 JasonChan Cash -50 Food 080420190712
 JasonChan Card -30.5 Game 080420191515
 JasonChan Cash -1000 Transportation 080420190000
-JasonChan Bank 1000 Transaction 150320190721
+JasonChan Bank +1000 Transaction 150320190721
+Nelson Bank +5000 Salary_Income 160420191649
