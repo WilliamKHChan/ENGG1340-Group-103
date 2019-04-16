@@ -254,7 +254,27 @@ void View_Record(User &user,string database) {
 			}
 			turn++;
 		}
-
+	}
+	else if (date.length()==6) {
+		while (getline(fin,line)) {
+			if (turn>3) {
+				int pos=line.rfind(" ")+1;
+				DATE.timestamp=line.substr(pos);
+				data=DATE.timestamp.substr(2,6);
+				if (data==date) {
+					//cout<<"DATE.timestamp = "<<DATE.timestamp<<endl;
+					//cout<<"Matched Date = "<<data<<endl;
+					data=DATE.timestamp.substr(0,13);
+					//cout<<"data = "<<data<<endl;
+					ExtractTime(DATE,true);
+					weekday=Identify_Weekday(DATE.wday);
+					cout<<left<<setw(30)<<line.substr(0,line.rfind(" "))<<' ';
+					cout<<DATE.day<<'/'<<DATE.month<<'/'<<DATE.year<<'-';
+					cout<<DATE.minute<<":"<<DATE.hour<<' '<<weekday<<endl;
+				}
+			}
+			turn++;
+		}
 	}
 	fin.close();
 	return;
