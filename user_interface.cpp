@@ -148,6 +148,7 @@ void Create_ACCT(User &user,string database) {
 					fout.close();
 					fin.close();
 					Update(user,database);
+					break;
 				}
 
 			}
@@ -168,8 +169,6 @@ void Delete_ACCT(User &user,string database) {
 void View_ACCT(User &user,string database) {
 	string line,username;
 	ifstream fin(database);
-	if (fin.fail())
-		exit(1);
 	while (getline(fin,line)){
 		istringstream iss(line);
 		iss>>username;

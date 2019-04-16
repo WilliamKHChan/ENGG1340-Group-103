@@ -128,7 +128,6 @@ bool Update(const User &user,string filename,string old_username) {
 	}
 	else if(name=="Account") {
 		for(auto i : user.account) {
-			cout<<user.username<<" "<<i.name<<" "<<i.amount<<endl;
 			temp<<user.username<<" "<<i.name<<" "<<i.amount<<endl;
 		}
 	}
