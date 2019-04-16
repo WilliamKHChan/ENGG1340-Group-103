@@ -112,6 +112,7 @@ void MainMenu(User &user,vector<string> database) {
 void Create_ACCT(User &user,string database) {
 	string ACCT_type, line, data, choice;
 	double Amount;
+	int replace=0;
 	cout<<"Please enter (Account type) (Amount): ";
 	cin >> ACCT_type >> Amount;
 	ifstream fin(database);
@@ -124,11 +125,13 @@ void Create_ACCT(User &user,string database) {
 		iss>>data;   // data = an username in Account.txt
 		if (data==user.username) {
 			iss>>data; // data = an account of the user
+			cout<<"data :"<<data<<endl;
 			if (ACCT_type==data) {
 				cout<<"\nAccount already exits. Do you want to replace it ?\n";
 				cout<<"1 Yes\t2 No and Exit\nPlease enter your choice : ";
 				cin>>choice;
 				if (choice=="1") {
+					replace=1;
 					int pos=0;
 					for (auto i : user.account) {
 						if (i.name==ACCT_type)
@@ -142,17 +145,22 @@ void Create_ACCT(User &user,string database) {
 					for (auto i : user.account) {
 						cout<<i.name<<' '<<i.amount<<endl;
 					}
+					fout.close();
+					fin.close();
 					Update(user,database);
 				}
 
 			}
-			else
-				fout<<user.username<<' '<<ACCT_type<<' '<<Amount<<endl;
 		}
+		else
+			replace=2;
 	}
-
+	if (replace==0) {
+	cout<<"Write into Account.txt\n";
+	fout<<user.username<<' '<<ACCT_type<<' '<<Amount<<endl;
 	fout.close();
 	fin.close();
+  }
 }
 void Delete_ACCT(User &user,string database) {
 

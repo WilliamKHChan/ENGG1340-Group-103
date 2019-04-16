@@ -150,9 +150,12 @@ bool Update(const User &user,string filename,string old_username) {
 	return true;
 }
 void Rename(string old_name,string new_name) {
-	remove(new_name.c_str());
-	rename(old_name.c_str(),new_name.c_str());
-	remove(old_name.c_str());
+	if (remove(new_name.c_str())!=0)
+		cout<<new_name<<" remove fail !\n";
+	if (rename(old_name.c_str(),new_name.c_str())!=0)
+		cout<<"rename fail !\n";
+	//if (remove(old_name.c_str())!=0)
+		//cout<<old_name<<" remove fail !\n";
 	return;
 }
 void ExtractTime(Time &time,bool isExtract) { // Convert string into int
