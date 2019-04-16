@@ -88,6 +88,7 @@ void MainMenu(User &user,vector<string> database) {
 				Add_Record(user,database[2]);
 				break;
 			case 5:
+				Delete_Record(user,database[2]);
 				break;
 			case 6:
 				break;
@@ -204,6 +205,9 @@ void Add_Record(User &user,string database) {
 	fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
 	fout<<date.timestamp<<endl;
 	fout.close();
+}
+void Delete_Record(User &user,string database) {
+	
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;

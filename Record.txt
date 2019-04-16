@@ -7,4 +7,4 @@ JasonChan Cash -50 Food 080420190712
 JasonChan Card -30.5 Game 080420191515
 JasonChan Cash -1000 Transportation 080420190000
 JasonChan Bank +1000 Transaction 150320190721
-Nelson Bank +5000 Salary_Income 160420191649
+Nelson Bank +5000 Salary 160420191649
