@@ -82,7 +82,7 @@ void MainMenu(User &user,vector<string> database) {
 				Delete_ACCT(user,database[1]);
 				break;
 			case 3:
-				View_ACCT(user,database[1]);
+				View_Database(user,database[1]);
 				break;
 			case 4:
 				Add_Record(user,database[2]);
@@ -91,6 +91,7 @@ void MainMenu(User &user,vector<string> database) {
 				Delete_Record(user,database[2]);
 				break;
 			case 6:
+				View_Database(user,database[2]);
 				break;
 			case 7:
 				SetBudget(user,database);
@@ -165,9 +166,9 @@ void Create_ACCT(User &user,string database) {
   }
 }
 void Delete_ACCT(User &user,string database) {
-	View_ACCT(user,database);
+	View_Database(user,database);
 	int Account;
-	cout<<"Please enter the Account to be deleted : ";
+	cout<<"Please enter your choice : ";
 	cin>>Account;
 	cout<<"Delete Account "<<Account<<endl;
 	Account-=1;
@@ -176,7 +177,7 @@ void Delete_ACCT(User &user,string database) {
 		//cout<<i.name<<' '<<i.amount<<endl;
 	Update(user,database);
 }
-void View_ACCT(User &user,string database) {
+void View_Database(User &user,string database) {
 	string line,username;
 	int num=1;
 	ifstream fin(database);
@@ -207,7 +208,32 @@ void Add_Record(User &user,string database) {
 	fout.close();
 }
 void Delete_Record(User &user,string database) {
-	
+	View_Database(user,database);
+	int Record;
+	cout<<"Please enter your choice : ";
+	cin>>Record;
+	cout<<"Delete Record "<<Record<<endl;
+	Record-=1;
+	user.record.erase(user.record.begin()+Record);
+	//for (auto i : user.record)
+		//cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
+	Update(user,database);
+}
+void View_Record(User &user,string database) {
+	ifstream fin(database);
+	if (fin.fail())
+		exit(1);
+	cout<<"For Monthly Record, enter MMYYYY\n";
+	cout<<"For Daily Record, enter DDMMYYYY\n";
+	cout<<"Enter : ";
+	string date, line;
+	cin>>date;
+	if (date.length()==8) { // Daily
+		while (getline())
+	}
+	else if(date.length()==6) { // Monthly
+
+	}
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;

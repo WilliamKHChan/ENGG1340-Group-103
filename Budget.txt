@@ -1,5 +1,5 @@
 Budget
-UserName|Period|DDMMYYYYTime|Type|BudgetAmount|Remain
+UserName|Period|Timestamp|Type|BudgetAmount|Remain
 
 AngelWen Daily 040420191123 Food 10000 10000
 JasonChan Daily 070420191917 Game 1000 1000

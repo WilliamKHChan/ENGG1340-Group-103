@@ -102,9 +102,8 @@ bool Update(const User &user,string filename,string old_username) {
 	ifstream file(filename);
 	ofstream temp(filename+".temp.txt");
 	string line,field,name;
-	if(file.fail() || temp.fail()) {
+	if(file.fail() || temp.fail())
 		exit(1);
-	}
 	file>>name;
 	temp<<name;
 	while(getline(file,line)) {
@@ -132,7 +131,7 @@ bool Update(const User &user,string filename,string old_username) {
 	}
 	else if(name=="Record") {
 		for(auto i : user.record) {
-			ExtractTime(i.date,false);
+			//ExtractTime(i.date,false);
 			temp<<user.username<<" "<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.date.timestamp<<endl;
 		}
 	}
@@ -157,14 +156,14 @@ void Rename(string old_name,string new_name) {
 	return;
 }
 void ExtractTime(Time &time,bool isExtract) { // Convert string into int
-	if(isExtract) { // For Data time
+	if(isExtract) {
 		time.year=atoi(time.timestamp.substr(4,4).c_str());
 		time.month=atoi(time.timestamp.substr(2,2).c_str());
 		time.day=atoi(time.timestamp.substr(0,2).c_str());
 		time.hour=atoi(time.timestamp.substr(8,2).c_str());
 		time.minute=atoi(time.timestamp.substr(10,2).c_str());
 	}
-	else { // For Current time
+	else {
 		char temp[12];
 		sprintf(temp,"%02d%02d%d%02d%02d",time.day,time.month,time.year,time.hour,time.minute);
 		time.timestamp=temp;
