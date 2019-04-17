@@ -168,6 +168,7 @@ void Create_ACCT(User &user,string database) {
 	fout.close();
 	fin.close();
   }
+	return;
 }
 void Delete_ACCT(User &user,string database) {
 	View_Database(user,database);
@@ -212,18 +213,19 @@ void Add_Record(User &user,string database) {
 	fout.close();
 }
 void Delete_Record(User &user,string database) {
-	int choice,index;
-	string date;
+	int choice,index,begin,end;
+	string date,DDMMYYYY;
 	int pos=0;
-	cout<<"1 Delete records of the entire day\n";
-	cout<<"2 Delete a single record in a day\n";
-	cout<<"Please enter your choice : ";
+	bool first=true;
+	cout<<"\t1 Delete records of the entire day\n";
+	cout<<"\t2 Delete a single record in a day\n";
+	cout<<"\tPlease enter your choice : ";
 	cin>>choice;
 	if (choice==2) {
 		View_Record(user,database,false);
 		//for (auto i : user.record)
 			//cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
-		cout<<"Please enter the index : ";
+		cout<<"\tPlease enter the index : ";
 		cin>>index;
 		user.record.erase(user.record.begin()+index);
 		Update(user,database);
@@ -232,21 +234,25 @@ void Delete_Record(User &user,string database) {
 	else if (choice==1) {
 		for (auto i : user.record)
 			cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
-		cout<<"Please enter the date (DDMMYYYY) : ";
+		cout<<"\tPlease enter the date (DDMMYYYY) : ";
 		cin>>date;
 		for (auto i : user.record) {
-			string DDMMYYYY=i.date.timestamp.substr(0,8);
-			cout<<DDMMYYYY<<endl;
+			DDMMYYYY=i.date.timestamp.substr(0,8);
 			if (date==DDMMYYYY) {
-				user.record.erase(user.record.begin()+pos);
-				cout<<"Deleted ! pos = "<<pos<<endl;
+				if (first) {
+					first=false;
+					begin=pos;
+				}
+				else
+					end=pos+1;
+				//cout<<"Deleted !\n";
 			}
-			cout<<"pos = "<<pos<<endl;
 			pos++;
 		}
-		for (auto i : user.record)
-			cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
-		//Update(user,database);
+		user.record.erase(user.record.begin()+begin,user.record.begin()+end);
+		//for (auto i : user.record)
+			//cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
+		Update(user,database);
 	}
 	return;
 }
