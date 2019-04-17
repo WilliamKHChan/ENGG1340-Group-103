@@ -93,7 +93,7 @@ void MainMenu(User &user,vector<string> database) {
 				Delete_Record(user,database[2]);
 				break;
 			case 6:
-				View_Record(user,database[2]);
+				View_Record(user,database[2],true);
 				break;
 			case 7:
 				break;
@@ -212,25 +212,58 @@ void Add_Record(User &user,string database) {
 	fout.close();
 }
 void Delete_Record(User &user,string database) {
-	View_Database(user,database);
-	int Record;
+	int choice,index;
+	string date;
+	int pos=0;
+	cout<<"1 Delete records of the entire day\n";
+	cout<<"2 Delete a single record in a day\n";
 	cout<<"Please enter your choice : ";
-	cin>>Record;
-	cout<<"Delete Record "<<Record<<endl;
-	Record-=1;
-	user.record.erase(user.record.begin()+Record);
-	//for (auto i : user.record)
-		//cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
-	Update(user,database);
+	cin>>choice;
+	if (choice==2) {
+		View_Record(user,database,false);
+		//for (auto i : user.record)
+			//cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
+		cout<<"Please enter the index : ";
+		cin>>index;
+		user.record.erase(user.record.begin()+index);
+		Update(user,database);
+
+	}
+	else if (choice==1) {
+		for (auto i : user.record)
+			cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
+		cout<<"Please enter the date (DDMMYYYY) : ";
+		cin>>date;
+		for (auto i : user.record) {
+			string DDMMYYYY=i.date.timestamp.substr(0,8);
+			cout<<DDMMYYYY<<endl;
+			if (date==DDMMYYYY) {
+				user.record.erase(user.record.begin()+pos);
+				cout<<"Deleted ! pos = "<<pos<<endl;
+			}
+			cout<<"pos = "<<pos<<endl;
+			pos++;
+		}
+		for (auto i : user.record)
+			cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
+		//Update(user,database);
+	}
+	return;
 }
-void View_Record(User &user,string database) {
+void View_Record(User &user,string database,bool show) {
 	int turn=1;
+	//int index=1;
+	int length=-1;
 	ifstream fin(database);
 	if (fin.fail())
 		exit(1);
-	cout<<"For Monthly Record: Enter MMYYYY\n";
-	cout<<"For Daily Record: Enter DDMMYYYY\n";
-	cout<<"Enter : ";
+	if (show) {
+		cout<<"For Monthly Record: Enter MMYYYY\n";
+		cout<<"For Daily Record: Enter DDMMYYYY\n";
+		cout<<"Enter : ";
+	}
+	else
+		cout<<"Please enter the date (DDMMYYYY) : ";
 	string date,line,data,weekday,name;
 	Time DATE;
 	cin>>date;
@@ -239,17 +272,18 @@ void View_Record(User &user,string database) {
 			istringstream iss(line);
 			iss>>name;
 			if (turn>3 && name==user.username) {
+				length++;
 				int pos=line.rfind(" ")+1;
 				DATE.timestamp=line.substr(pos);
 				data=DATE.timestamp.substr(0,8);
 				if (data==date) {
-					//cout<<"DATE.timestamp = "<<DATE.timestamp<<endl;
-					//cout<<"Matched Date = "<<data<<endl;
 					data=DATE.timestamp.substr(0,13);
-					//cout<<"data = "<<data<<endl;
 					ExtractTime(DATE,true);
 					weekday=Identify_Weekday(DATE.wday);
-					cout<<left<<setw(30)<<line.substr(0,line.rfind(" "))<<' ';
+					if (!show) {
+						cout<<left<<setw(2)<<length<<" - ";
+					}
+					cout<<left<<setw(35)<<line.substr(0,line.rfind(" "))<<' ';
 					cout<<DATE.day<<'/'<<DATE.month<<'/'<<DATE.year<<'-';
 					cout<<DATE.minute<<":"<<DATE.hour<<' '<<weekday<<endl;
 				}
@@ -266,13 +300,13 @@ void View_Record(User &user,string database) {
 				DATE.timestamp=line.substr(pos);
 				data=DATE.timestamp.substr(2,6);
 				if (data==date) {
-					//cout<<"DATE.timestamp = "<<DATE.timestamp<<endl;
-					//cout<<"Matched Date = "<<data<<endl;
 					data=DATE.timestamp.substr(0,13);
-					//cout<<"data = "<<data<<endl;
 					ExtractTime(DATE,true);
 					weekday=Identify_Weekday(DATE.wday);
-					cout<<left<<setw(30)<<line.substr(0,line.rfind(" "))<<' ';
+					if (!show) {
+						cout<<left<<setw(2)<<length<<" - ";
+					}
+					cout<<left<<setw(35)<<line.substr(0,line.rfind(" "))<<' ';
 					cout<<DATE.day<<'/'<<DATE.month<<'/'<<DATE.year<<'-';
 					cout<<DATE.minute<<":"<<DATE.hour<<' '<<weekday<<endl;
 				}
@@ -363,7 +397,8 @@ void ShowReport(User &user,vector<string> database) {
 	bool showBudget=false;
 	double income=0,expense=0;
 	map<string,double> category,account;
-	cout<<"Please enter the date (DDMMYYYY/MMYYYY): ";
+	cout<<"For Monthly Report: Enter MMYYYY \n";
+	cout<<"For Daily Report: Enter DDMMYYYY \nEnter : ";
 	cin>>date;
 	if(date.length()==8) {
 		l=0;

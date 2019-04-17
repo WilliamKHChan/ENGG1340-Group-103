@@ -10,7 +10,7 @@ void Delete_ACCT(User&,string);
 void View_Database(User&,string);
 void Add_Record(User&,string);
 void Delete_Record(User&,string);
-void View_Record(User&,string);
+void View_Record(User&,string,bool);
 void SetBudget(User&,vector<string>);
 void ShowReport(User&,vector<string>);
 void ChangePassword(User&,vector<string>);
