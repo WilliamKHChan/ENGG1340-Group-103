@@ -231,12 +231,14 @@ void View_Record(User &user,string database) {
 	cout<<"For Monthly Record: Enter MMYYYY\n";
 	cout<<"For Daily Record: Enter DDMMYYYY\n";
 	cout<<"Enter : ";
-	string date,line,data,weekday;
+	string date,line,data,weekday,name;
 	Time DATE;
 	cin>>date;
 	if (date.length()==8) { // Daily
 		while (getline(fin,line)) {
-			if (turn>3) {
+			istringstream iss(line);
+			iss>>name;
+			if (turn>3 && name==user.username) {
 				int pos=line.rfind(" ")+1;
 				DATE.timestamp=line.substr(pos);
 				data=DATE.timestamp.substr(0,8);
@@ -257,7 +259,9 @@ void View_Record(User &user,string database) {
 	}
 	else if (date.length()==6) {
 		while (getline(fin,line)) {
-			if (turn>3) {
+			istringstream iss(line);
+			iss>>name;
+			if (turn>3 && name==user.username) {
 				int pos=line.rfind(" ")+1;
 				DATE.timestamp=line.substr(pos);
 				data=DATE.timestamp.substr(2,6);
