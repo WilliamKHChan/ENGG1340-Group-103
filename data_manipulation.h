@@ -43,6 +43,7 @@ public:
 	double amount;
 	double remain;
 };
+
 class User {
 public:
 	string username;
@@ -51,7 +52,7 @@ public:
 	vector<Account> account;
 	vector<Record> record;
 	vector<Budget> budget;
-	vector<Record> auto;
+	//vector<Auto> auto_record;
 };
 bool LoadAll(User&,vector<string>);
 bool Load(User&,string);

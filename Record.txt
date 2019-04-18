@@ -1,17 +1,16 @@
 Record
 Username|Account|Amount|Category|Timestamp
 
-User0001 Bank 100 Salary 0703201914110
-JasonChan Cash -50 Food 0804201907121
-JasonChan Card -30.5 Game 0804201915152
-JasonChan Cash -1000 Transportation 0804201900003
-JasonChan Bank 1000 Transaction 1503201907214
-Nelson Bank 5000 Salary 1604201916495
-Nelson Bank -50 Food 1604201918496
-Nelson Bank -500 Entertainment 1604201922162
-Nelson Bank -59 Food 1604201915353
-Nelson Bank -10 Transportation 1604201915353
-Nelson Bank -59 Food 1704201915353
-Nelson Bank 10000 Salary 1704201916453
-Nelson Bank -90 Entertainment 1704201921143
-Nelson Bank -22 Transportation 1804201916424-Auto:12345
+User0001 Bank 100 Salary 0703201914110-N
+JasonChan Cash -50 Food 0804201907121-N
+JasonChan Card -30.5 Game 0804201915152-N
+JasonChan Cash -1000 Transportation 0804201900003-N
+JasonChan Bank 1000 Transaction 1503201907211-N
+Nelson Bank 5000 Salary 1604201916495-N
+Nelson Bank -50 Food 1604201918496-N
+Nelson Bank -500 Entertainment 1604201922162-N
+Nelson Bank -10 Transportation 1604201915353-N
+Nelson Bank -59 Food 1704201915353-N
+Nelson Bank 10000 Salary 1704201916453-N
+Nelson Bank -90 Entertainment 1704201921143-N
+Nelson Bank -22 Transportation 1804201918404-Auto:12345

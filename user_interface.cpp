@@ -12,6 +12,7 @@ void Login(User &user,vector<string> database) {
 		}
 		else {													// Login succeed
 			RenewBudget(user.budget);     // Update data for calcualtion
+			Activate_Auto_Record(user,database);
 		}
 	}
 	while(!success);
@@ -338,10 +339,34 @@ void Set_Auto_Record(User &user,string database) {
 	cout<<"          5: Fri  6: Sat  0: Sun\n";
 	cout<<"You may select multiple days (i.e. 12345)\nEnter : ";
 	cin>>days;
-	cout<<"The Auto Record will be activated in the next login.\n";
+	cout<<"The Auto-Record is activated.\n";
 	fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
 	fout<<date.timestamp<<"-Auto:"<<days<<endl;
 	return;
+	fout.close();
+}
+void Activate_Auto_Record(User &user,vector<string> database) {
+	int turn=1;
+	string line,info,user_data,num;
+	ifstream fin("Auto_Record.txt");
+	if (fin.fail())
+		exit(1);
+	while (getline(fin,line)) {
+		if (turn>3) {
+			for (auto i : user.record) {
+				info=line.substr(0,line.rfind(" "));
+				num=i.income;
+				user_data=user.username+" "+i.account+" "+num+" "+i.type;
+				if (i.date.timestamp.find("Auto")!=string::npos && user_data==info)
+					cout<<"There is a Auto-Record "<<i.date.timestamp<<endl;
+			}
+		}
+		turn++;
+	}
+	for (auto i : user.record) {
+		if (i.date.timestamp.find("Auto")!=string::npos)
+			cout<<"There is a Auto-Record "<<i.date.timestamp<<endl;
+	}
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;
