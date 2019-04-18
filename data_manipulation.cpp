@@ -90,6 +90,9 @@ bool Load(User &user,string filename) {
 	return flag;
 	file.close();
 }
+void Update_Record() {
+	
+}
 bool UpdateAll(const User &user,vector<string> filename,string old_username) {
 	for(auto i : filename) {
 		if(!Update(user,i,old_username)) {
@@ -133,6 +136,7 @@ bool Update(const User &user,string filename,string old_username) {
 		for(auto i : user.record) {
 			//ExtractTime(i.date,false);
 			temp<<user.username<<" "<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.date.timestamp<<endl;
+			Update_Record();
 		}
 	}
 	else if(name=="Budget") {

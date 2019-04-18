@@ -51,6 +51,7 @@ public:
 	vector<Account> account;
 	vector<Record> record;
 	vector<Budget> budget;
+	vector<Record> auto;
 };
 bool LoadAll(User&,vector<string>);
 bool Load(User&,string);

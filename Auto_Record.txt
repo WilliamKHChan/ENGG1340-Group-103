@@ -1,0 +1,4 @@
+Auto_Record
+Username|Account|Amount|Category|Timestamp
+
+Nelson Bank -22 Transportation 1804201916424-Auto:12345

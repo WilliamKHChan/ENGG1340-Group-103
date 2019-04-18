@@ -14,3 +14,4 @@ Nelson Bank -10 Transportation 1604201915353
 Nelson Bank -59 Food 1704201915353
 Nelson Bank 10000 Salary 1704201916453
 Nelson Bank -90 Entertainment 1704201921143
+Nelson Bank -22 Transportation 1804201916424-Auto:12345

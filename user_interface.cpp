@@ -96,6 +96,7 @@ void MainMenu(User &user,vector<string> database) {
 				View_Record(user,database[2],true);
 				break;
 			case 7:
+				Set_Auto_Record(user,database[2]);
 				break;
 			case 8:
 				SetBudget(user,database);
@@ -321,6 +322,25 @@ void View_Record(User &user,string database,bool show) {
 		}
 	}
 	fin.close();
+	return;
+}
+void Set_Auto_Record(User &user,string database) {
+	Time date;
+	GetCurrentTime(date);
+	ofstream fout;
+	fout.open(database,ios::app);
+	if (fout.fail())
+		exit(1);
+	string Account,Amount,Category,days;
+	cout<<"Enter record (Account) (Amount) (Category) : ";
+	cin>>Account>>Amount>>Category;
+	cout<<"For every 1: Mon  2: Tue  3: Wed  4: Thu\n";
+	cout<<"          5: Fri  6: Sat  0: Sun\n";
+	cout<<"You may select multiple days (i.e. 12345)\nEnter : ";
+	cin>>days;
+	cout<<"The Auto Record will be activated in the next login.\n";
+	fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
+	fout<<date.timestamp<<"-Auto:"<<days<<endl;
 	return;
 }
 void SetBudget(User &user,vector<string> database) {
