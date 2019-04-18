@@ -56,6 +56,8 @@ public:
 };
 bool LoadAll(User&,vector<string>);
 bool Load(User&,string);
+void Activate_Auto_Record(User&,vector<string>);
+bool should_Update(User&,string,string);
 bool UpdateAll(const User&,vector<string>,string="");
 bool Update(const User&,string,string="");
 string Identify_Weekday(int);

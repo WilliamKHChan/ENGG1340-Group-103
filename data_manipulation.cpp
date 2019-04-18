@@ -90,7 +90,80 @@ bool Load(User &user,string filename) {
 	return flag;
 	file.close();
 }
-//void Update_Record()
+void Activate_Auto_Record(User &user,vector<string> database) {
+	int turn=1;
+	int num,pos;
+	string line,info,user_data,str_num;
+	ifstream fin("Auto_Record.txt");
+	if (fin.fail())
+		exit(1);
+	while (getline(fin,line)) {
+		if (turn>3) {
+			for (vector<Record>::reverse_iterator i : user.record.rbegin()) {
+				pos=line.rfind(" ");
+				info=line.substr(0,pos);
+				num=i.income;
+				str_num=to_string(num);
+				user_data=user.username+" "+i.account+" "+str_num+" "+i.type;
+				if (i.date.timestamp.find("Auto")!=string::npos && user_data==info) {
+				  cout<<"There is a Auto-Record "<<i.date.timestamp<<endl;
+					if (should_Update(user,i.date.timestamp,line))
+					  Update(user,"Record.txt");
+				}
+			}
+		}
+		turn++;
+	}
+	fin.close();
+}
+bool should_Update(User &user,string record_time,string line) {
+	Time time;
+	GetCurrentTime(time);
+	Record rd;
+	string data,Timestamp,date1,date2,tail;
+	tail=record_time.substr(13);
+	istringstream iss(line);
+	iss>>rd.account;
+	iss>>data;
+	rd.income=atof(data.c_str());
+	iss>>rd.type;
+	int D,original_wday;
+	string user_input_days=record_time.substr(19);
+	int weekday=atoi((record_time.substr(12,1)).c_str())+1;
+	original_wday=weekday-1;
+	int DD=atoi((record_time.substr(0,2)).c_str());
+	//string MM=record_time.substr(2,2);
+	int days_elapsed=atoi("29")-DD;
+	int weeks_elapsed=0;
+	int update=-1;
+	int count_days=0;
+	//(time.timestamp.substr(0,2)
+	//cout<<"days_elapsed = "<<days_elapsed<<endl;
+	while (days_elapsed-7>0) {
+		days_elapsed-=7;
+		weeks_elapsed++;
+	}
+	while(weeks_elapsed!=-1) {
+		for (int j=0; j<user_input_days.length(); j++) {
+			D=atoi(user_input_days[j].c_str());
+			if (weekday==D) {
+				update=0;
+				date1=to_string(DD+count_days);
+				date2=to_string(D);
+				Timestamp=date1+" "+record_time.substr(2,10)+" "+date2+" "tail;
+				rd.timestamp=Timestamp;
+				user.record.push_back(rd);
+			}
+			count_days++;
+			weekday++;
+		}
+		weeks_elapsed--;
+
+	}
+	if (update=0)
+		return true;
+	return false;
+}
 bool UpdateAll(const User &user,vector<string> filename,string old_username) {
 	for(auto i : filename) {
 		if(!Update(user,i,old_username)) {
