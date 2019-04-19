@@ -328,9 +328,10 @@ void View_Record(User &user,string database,bool show) {
 void Set_Auto_Record(User &user,string database) {
 	Time date;
 	GetCurrentTime(date);
-	ofstream fout;
+	ofstream fout,fout2;
 	fout.open(database,ios::app);
-	if (fout.fail())
+	fout2.open("Auto_"+database,ios::app);
+	if (fout.fail()||fout2.fail())
 		exit(1);
 	string Account,Amount,Category,days;
 	cout<<"Enter record (Account) (Amount) (Category) : ";
@@ -342,8 +343,11 @@ void Set_Auto_Record(User &user,string database) {
 	cout<<"The Auto-Record is activated.\n";
 	fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
 	fout<<date.timestamp<<"-Auto:"<<days<<endl;
-	return;
+	fout2<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
+	fout2<<date.timestamp<<"-Auto:"<<days<<endl;
 	fout.close();
+	fout2.close();
+	return;
 }
 void SetBudget(User &user,vector<string> database) {
 	int choice,item,count;

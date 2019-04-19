@@ -90,35 +90,15 @@ bool Load(User &user,string filename) {
 	return flag;
 	file.close();
 }
-void Activate_Auto_Record(User &user,vector<string> database) {
-	int turn=1;
-	int num,pos;
-	string line,info,user_data,str_num;
-	ifstream fin("Auto_Record.txt");
-	if (fin.fail())
-		exit(1);
-	while (getline(fin,line)) {
-		if (turn>3) {
-			for (vector<Record>::reverse_iterator i : user.record.rbegin()) {
-				pos=line.rfind(" ");
-				info=line.substr(0,pos);
-				num=i.income;
-				str_num=to_string(num);
-				user_data=user.username+" "+i.account+" "+str_num+" "+i.type;
-				if (i.date.timestamp.find("Auto")!=string::npos && user_data==info) {
-				  cout<<"There is a Auto-Record "<<i.date.timestamp<<endl;
-					if (should_Update(user,i.date.timestamp,line))
-					  Update(user,"Record.txt");
-				}
-			}
-		}
-		turn++;
-	}
-	fin.close();
+void Auto_insert_time(Time &date,string Timestamp) {
+	date.year=atoi(Timestamp.substr(4,4).c_str());
+	date.month=atoi(Timestamp.substr(2,2).c_str());
+	date.day=atoi(Timestamp.substr(0,2).c_str());
+	date.hour=atoi(Timestamp.substr(8,2).c_str());
+	date.minute=atoi(Timestamp.substr(10,2).c_str());
+	return;
 }
 bool should_Update(User &user,string record_time,string line) {
-	Time time;
-	GetCurrentTime(time);
 	Record rd;
 	string data,Timestamp,date1,date2,tail;
 	tail=record_time.substr(13);
@@ -129,11 +109,14 @@ bool should_Update(User &user,string record_time,string line) {
 	iss>>rd.type;
 	int D,original_wday;
 	string user_input_days=record_time.substr(19);
-	int weekday=atoi((record_time.substr(12,1)).c_str())+1;
-	original_wday=weekday-1;
+	int weekday=atoi((record_time.substr(12,1)).c_str());
+	cout<<"!!!!!!!!!!!!!!! 1 weekday = "<<weekday<<endl;
+	//original_wday=weekday-1;
 	int DD=atoi((record_time.substr(0,2)).c_str());
+	int dd=DD;
 	//string MM=record_time.substr(2,2);
 	int days_elapsed=atoi("29")-DD;
+	int total_days=days_elapsed;
 	int weeks_elapsed=0;
 	int update=-1;
 	int count_days=0;
@@ -143,26 +126,58 @@ bool should_Update(User &user,string record_time,string line) {
 		days_elapsed-=7;
 		weeks_elapsed++;
 	}
-	while(weeks_elapsed!=-1) {
+	while(count_days!=total_days) {
 		for (int j=0; j<user_input_days.length(); j++) {
-			D=atoi(user_input_days[j].c_str());
+			D=user_input_days[j]-'0';
 			if (weekday==D) {
 				update=0;
 				date1=to_string(DD+count_days);
 				date2=to_string(D);
-				Timestamp=date1+" "+record_time.substr(2,10)+" "+date2+" "tail;
-				rd.timestamp=Timestamp;
+				Timestamp=date1+" "+record_time.substr(2,10)+" "+date2+" "+tail;
+				rd.date.timestamp=Timestamp;
+				rd.date.wday=D;
+				Auto_insert_time(rd.date,Timestamp);
 				user.record.push_back(rd);
 			}
+			if (weekday==6)
+				weekday=-1;
 			count_days++;
 			weekday++;
+			cout<<"count_days = "<<count_days<<endl;
+			cout<<"weekday = "<<weekday<<endl;
 		}
-		weeks_elapsed--;
 
 	}
 	if (update=0)
 		return true;
-	return false;
+	return true;
+}
+void Activate_Auto_Record(User &user,vector<string> database) {
+	int turn=1;
+	int num,pos;
+	string line,info,user_data,str_num;
+	ifstream fin("Auto_Record.txt");
+	reverse(user.record.begin(), user.record.end());
+	if (fin.fail())
+		exit(1);
+	while (getline(fin,line)) {
+		if (turn>3) {
+			for (auto i : user.record) {
+				pos=line.rfind(" ");
+				info=line.substr(0,pos);
+				num=i.income;
+				str_num=to_string(num);
+				user_data=user.username+" "+i.account+" "+str_num+" "+i.type;
+				if (i.date.timestamp.find("Auto")!=string::npos && user_data==info) {
+				  cout<<"There is a Auto-Record "<<i.date.timestamp<<endl;
+					should_Update(user,i.date.timestamp,line);
+					  //Update(user,"Record.txt");
+				}
+			}
+		}
+		turn++;
+	}
+	fin.close();
 }
 bool UpdateAll(const User &user,vector<string> filename,string old_username) {
 	for(auto i : filename) {
