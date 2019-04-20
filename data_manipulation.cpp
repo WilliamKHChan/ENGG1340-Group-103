@@ -132,14 +132,19 @@ void Auto_insert_time(Time &date,string Timestamp) {
 	return;
 }
 bool should_Update(User &user,string record_time,string line) {
+	ofstream fout;
+	fout.open("Record.txt",ios::app);
+	if (fout.fail())
+		exit(1);
 	Time time;
 	GetCurrentTime(time);
-	int current_month=5;
-	//int current_month=time.month;
+	//int current_month=4;
+	int current_month=time.month;
 	Record rd;
-	string D,data,Timestamp,date1,date2,date3,tail;
+	string D,data,Timestamp,date1,date2,date3,tail,name;
 	tail=record_time.substr(13);
 	istringstream iss(line);
+	iss>>name;
 	iss>>rd.account;
 	iss>>data;
 	rd.income=atof(data.c_str());
@@ -153,20 +158,19 @@ bool should_Update(User &user,string record_time,string line) {
 	int MM=atoi((record_time.substr(2,2)).c_str());
 	int days_elapsed;
 	if (current_month-MM==0)
-		days_elapsed=atoi("29")-DD;
+		days_elapsed=atoi(time.timestamp.substr(0,2))-DD;
 	else
-		days_elapsed=atoi("29")+Day_passed(MM,current_month,DD);
+		days_elapsed=atoi(time.timestamp.substr(0,2))+Day_passed(MM,current_month,DD);
 	int total_days=days_elapsed;
 	int weeks_elapsed=0;
 	int update=-1;
 	int count_days=0;
 	//(time.timestamp.substr(0,2)
-	//cout<<"days_elapsed = "<<days_elapsed<<endl;
 	while (days_elapsed-7>0) {
 		days_elapsed-=7;
 		weeks_elapsed++;
 	}
-	while (count_days<=total_days) {
+	while (count_days+1<=total_days) {
 		if (weekday==6) {
 			weekday=-1;
 		}
@@ -177,8 +181,8 @@ bool should_Update(User &user,string record_time,string line) {
 			weeks_elapsed--;
 		}
 		D=to_string(weekday);
-		cout<<"count_days = "<<count_days<<endl;
-		cout<<"weekday = "<<weekday<<endl;
+		//cout<<"count_days = "<<count_days<<endl;
+		//cout<<"weekday = "<<weekday<<endl;
 		if (user_input_days.find(D)!=string::npos) {
 			days_in_month=Identify_Month(MM);
 			update=0;
@@ -190,17 +194,20 @@ bool should_Update(User &user,string record_time,string line) {
 			if (date2.length()==1)
 				date2="0"+date2;
 			date3=D;
-			Timestamp=date1+" "+date2+" "+record_time.substr(4,8)+" "+date3+" "+tail;
-			cout<<"Timestamp = "<<Timestamp<<endl;
+			Timestamp=date1+date2+record_time.substr(4,8)+date3+tail;
+			//cout<<"Timestamp = "<<Timestamp<<endl;
 			rd.date.timestamp=Timestamp;
 			rd.date.wday=atoi(D.c_str());
 			Auto_insert_time(rd.date,Timestamp);
-			user.record.push_back(rd);
+			user.record.insert(user.record.begin(),rd);
+			fout<<name<<" "<<rd.account<<" "<<rd.income<<" "<<rd.type;
+			fout<<" "<<rd.date.timestamp<<endl;
 		}
 	}
-if (update=0)
+if (update!=0)
+	return false;
+else
 	return true;
-return true;
 }
 void Activate_Auto_Record(User &user,vector<string> database) {
 	int turn=1;
@@ -221,7 +228,11 @@ void Activate_Auto_Record(User &user,vector<string> database) {
 				if (i.date.timestamp.find("Auto")!=string::npos && user_data==info) {
 				  cout<<"There is a Auto-Record "<<i.date.timestamp<<endl;
 					should_Update(user,i.date.timestamp,line);
+					reverse(user.record.begin(), user.record.end());
+					for (auto i : user.record)
+						cout<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.date.timestamp<<endl;
 					  //Update(user,"Record.txt");
+
 				}
 			}
 		}
