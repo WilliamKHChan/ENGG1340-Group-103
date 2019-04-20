@@ -110,7 +110,6 @@ bool should_Update(User &user,string record_time,string line) {
 	int D,original_wday;
 	string user_input_days=record_time.substr(19);
 	int weekday=atoi((record_time.substr(12,1)).c_str());
-	cout<<"!!!!!!!!!!!!!!! 1 weekday = "<<weekday<<endl;
 	//original_wday=weekday-1;
 	int DD=atoi((record_time.substr(0,2)).c_str());
 	int dd=DD;
@@ -126,8 +125,10 @@ bool should_Update(User &user,string record_time,string line) {
 		days_elapsed-=7;
 		weeks_elapsed++;
 	}
-	while(count_days!=total_days) {
+	while(count_days<=total_days) {
 		for (int j=0; j<user_input_days.length(); j++) {
+			if(count_days>=total_days)
+				break;
 			D=user_input_days[j]-'0';
 			if (weekday==D) {
 				update=0;
@@ -143,11 +144,18 @@ bool should_Update(User &user,string record_time,string line) {
 				weekday=-1;
 			count_days++;
 			weekday++;
+			if (count_days%7==0) {
+				cout<<count_days%7<<endl;
+				weeks_elapsed--;
+			}
 			cout<<"count_days = "<<count_days<<endl;
 			cout<<"weekday = "<<weekday<<endl;
+			cout<<"weeks_elapsed = "<<weeks_elapsed<<endl;
 		}
-
+		if(count_days>=total_days)
+			break;
 	}
+
 	if (update=0)
 		return true;
 	return true;
