@@ -56,6 +56,7 @@ public:
 };
 bool LoadAll(User&,vector<string>);
 bool Load(User&,string);
+int Day_passed(int,int,int);
 void Activate_Auto_Record(User&,vector<string>);
 bool should_Update(User&,string,string);
 void Auto_insert_time(Time&,string);

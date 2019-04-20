@@ -90,6 +90,39 @@ bool Load(User &user,string filename) {
 	return flag;
 	file.close();
 }
+int Identify_Month(int MM) {
+	int days;
+	switch (MM) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			days=31;
+			return days;
+			break;
+		case 2:
+			days=28;
+			return days;
+			break;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			days=30;
+			return days;
+			break;
+	}
+}
+int Day_passed(int MM,int current_month,int DD) {
+	int days,days_elapsed;
+	int months_elasped=current_month-MM;
+	days=Identify_Month(MM);
+	days_elapsed=days-DD;
+	return days_elapsed;
+}
 void Auto_insert_time(Time &date,string Timestamp) {
 	date.year=atoi(Timestamp.substr(4,4).c_str());
 	date.month=atoi(Timestamp.substr(2,2).c_str());
@@ -99,22 +132,30 @@ void Auto_insert_time(Time &date,string Timestamp) {
 	return;
 }
 bool should_Update(User &user,string record_time,string line) {
+	Time time;
+	GetCurrentTime(time);
+	int current_month=5;
+	//int current_month=time.month;
 	Record rd;
-	string data,Timestamp,date1,date2,tail;
+	string D,data,Timestamp,date1,date2,date3,tail;
 	tail=record_time.substr(13);
 	istringstream iss(line);
 	iss>>rd.account;
 	iss>>data;
 	rd.income=atof(data.c_str());
 	iss>>rd.type;
-	int D,original_wday;
+	int original_wday,days_in_month;
 	string user_input_days=record_time.substr(19);
 	int weekday=atoi((record_time.substr(12,1)).c_str());
 	//original_wday=weekday-1;
 	int DD=atoi((record_time.substr(0,2)).c_str());
 	int dd=DD;
-	//string MM=record_time.substr(2,2);
-	int days_elapsed=atoi("29")-DD;
+	int MM=atoi((record_time.substr(2,2)).c_str());
+	int days_elapsed;
+	if (current_month-MM==0)
+		days_elapsed=atoi("29")-DD;
+	else
+		days_elapsed=atoi("29")+Day_passed(MM,current_month,DD);
 	int total_days=days_elapsed;
 	int weeks_elapsed=0;
 	int update=-1;
@@ -125,40 +166,41 @@ bool should_Update(User &user,string record_time,string line) {
 		days_elapsed-=7;
 		weeks_elapsed++;
 	}
-	while(count_days<=total_days) {
-		for (int j=0; j<user_input_days.length(); j++) {
-			if(count_days>=total_days)
-				break;
-			D=user_input_days[j]-'0';
-			if (weekday==D) {
-				update=0;
-				date1=to_string(DD+count_days);
-				date2=to_string(D);
-				Timestamp=date1+" "+record_time.substr(2,10)+" "+date2+" "+tail;
-				rd.date.timestamp=Timestamp;
-				rd.date.wday=D;
-				Auto_insert_time(rd.date,Timestamp);
-				user.record.push_back(rd);
-			}
-			if (weekday==6)
-				weekday=-1;
-			count_days++;
-			weekday++;
-			if (count_days%7==0) {
-				cout<<count_days%7<<endl;
-				weeks_elapsed--;
-			}
-			cout<<"count_days = "<<count_days<<endl;
-			cout<<"weekday = "<<weekday<<endl;
-			cout<<"weeks_elapsed = "<<weeks_elapsed<<endl;
+	while (count_days<=total_days) {
+		if (weekday==6) {
+			weekday=-1;
 		}
-		if(count_days>=total_days)
-			break;
+		count_days++;
+		weekday++;
+		if (count_days%7==0) {
+			cout<<count_days%7<<endl;
+			weeks_elapsed--;
+		}
+		D=to_string(weekday);
+		cout<<"count_days = "<<count_days<<endl;
+		cout<<"weekday = "<<weekday<<endl;
+		if (user_input_days.find(D)!=string::npos) {
+			days_in_month=Identify_Month(MM);
+			update=0;
+			if (DD+count_days>days_in_month)
+				date1=to_string(DD+count_days-days_in_month);
+			else
+				date1=to_string(DD+count_days);
+			date2=to_string(current_month);
+			if (date2.length()==1)
+				date2="0"+date2;
+			date3=D;
+			Timestamp=date1+" "+date2+" "+record_time.substr(4,8)+" "+date3+" "+tail;
+			cout<<"Timestamp = "<<Timestamp<<endl;
+			rd.date.timestamp=Timestamp;
+			rd.date.wday=atoi(D.c_str());
+			Auto_insert_time(rd.date,Timestamp);
+			user.record.push_back(rd);
+		}
 	}
-
-	if (update=0)
-		return true;
+if (update=0)
 	return true;
+return true;
 }
 void Activate_Auto_Record(User &user,vector<string> database) {
 	int turn=1;
