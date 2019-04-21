@@ -326,27 +326,67 @@ void View_Record(User &user,string database,bool show) {
 	return;
 }
 void Set_Auto_Record(User &user,string database) {
+	int choice,turn,index;
 	Time date;
 	GetCurrentTime(date);
-	ofstream fout,fout2;
-	fout.open(database,ios::app);
-	fout2.open("Auto_"+database,ios::app);
-	if (fout.fail()||fout2.fail())
-		exit(1);
-	string Account,Amount,Category,days;
-	cout<<"Enter record (Account) (Amount) (Category) : ";
-	cin>>Account>>Amount>>Category;
-	cout<<"For every 1: Mon  2: Tue  3: Wed  4: Thu\n";
-	cout<<"          5: Fri  6: Sat  0: Sun\n";
-	cout<<"You may select multiple days (i.e. 12345)\nEnter : ";
-	cin>>days;
-	cout<<"The Auto-Record is activated.\n";
-	fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
-	fout<<date.timestamp<<"-Auto:"<<days<<endl;
-	fout2<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
-	fout2<<date.timestamp<<"-Auto:"<<days<<endl;
-	fout.close();
-	fout2.close();
+	cout<<"\t1 Set an auto-record\t2 Cancel an auto-record\n";
+	cout<<"Enter your choice : ";
+	cin>>choice;
+	if (choice==1) {
+			ofstream fout,fout2;
+			fout.open(database,ios::app);
+			fout2.open("Auto_"+database,ios::app);
+			if (fout.fail()||fout2.fail())
+				exit(1);
+			string Account,Amount,Category,days;
+			cout<<"Enter record (Account) (Amount) (Category) : ";
+			cin>>Account>>Amount>>Category;
+			cout<<"For every 1: Mon  2: Tue  3: Wed  4: Thu\n";
+			cout<<"          5: Fri  6: Sat  0: Sun\n";
+			cout<<"You may select multiple days (i.e. 12345)\nEnter : ";
+			cin>>days;
+			cout<<"The Auto-Record is activated.\n";
+			fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
+			fout<<date.timestamp<<"-Auto:"<<days<<endl;
+			fout2<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
+			fout2<<date.timestamp<<"-Auto:"<<days<<endl;
+			fout.close();
+			fout2.close();
+	}
+	else if (choice==2) {
+		ifstream fin("Auto_Record.txt");
+		ofstream fout;
+		fout.open("Auto_Record.txt.temp.txt",ios::app);
+		string line;
+		if (fin.fail()||fout.fail()) {
+			exit(1);
+		}
+		turn=1;
+		index=-1;
+		while(getline(fin,line)) {
+			if (turn>3) {
+				int pos=line.rfind(" ");
+				int day=atoi((line.substr(pos+13,1)).c_str());
+				string d=Identify_Weekday(day);
+				cout<<"\t"<<turn<<" "<<line.substr(0,pos)<<" ";
+				cout<<line.substr(pos+1,2)<<"/"<<line.substr(pos+3,2)<<"/";
+				cout<<line.substr(pos+5,4)<<"-"<<line.substr(pos+9,2)<<":";
+				cout<<line.substr(pos+11,2)<<" "<<d<<" "<<line.substr(pos+14)<<endl;
+				cout<<"Please select the index : ";
+				cin>>index;
+			}
+			if (turn!=index) {
+				fout<<line<<endl;
+			}
+			turn++;
+		}
+		fin.close();
+		fout.close();
+		Rename("Auto_Record.txt.temp.txt","Auto_Record.txt");
+  }
+	else if (choice<1||choice>2) {
+		cout<<"Invalid\n";
+	}
 	return;
 }
 void SetBudget(User &user,vector<string> database) {
