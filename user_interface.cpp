@@ -203,12 +203,14 @@ void View_Database(User &user,string database) {
 void Add_Record(User &user,string database) {
 	string Account,Amount,Category,line;
 	int element=0;
- 	double amount;
+ 	double amount,diff;
 	Time date;
 	GetCurrentTime(date);
 	cout<<"Please enter (Account) (+/-Amount) (Category) : ";
 	cin>>Account>>Amount>>Category;
-	amount=atof((Amount.substr(1)).c_str());
+	//amount=atof((Amount.substr(1)).c_str());
+	istringstream iss(Amount);
+	iss >> amount;
 	ofstream fout;
 	fout.open(database, ios::app);
 	if (fout.fail())
@@ -218,16 +220,28 @@ void Add_Record(User &user,string database) {
 	fout.close();
 	for (auto i : user.budget) {
 		if (i.type==Category) {
-			double diff=i.remain-amount;
+			diff=i.remain+amount;
 			user.budget[element].remain=diff;
 			if (diff>=0)
 				cout<<Category<<"-"<<i.period<<" budget remaining : "<<diff<<endl;
 			else
 				cout<<Category<<"-"<<i.period<<" budget overspent : "<<diff<<endl;
+			break;
+		}
+		element++;
+	}
+	element=0;
+	for (auto i : user.account) {
+		if (i.name==Account) {
+			diff=i.amount+amount;
+			cout<<"Account - "<<i.name<<" : $"<<diff<<endl;
+			user.account[element].amount=diff;
+			break;
 		}
 		element++;
 	}
 	Update(user,"Budget.txt");
+	Update(user,"Account.txt");
 }
 void Delete_Record(User &user,string database) {
 	int choice,index,begin,end;
