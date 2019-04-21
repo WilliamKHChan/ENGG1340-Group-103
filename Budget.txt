@@ -5,5 +5,5 @@ AngelWen Daily 0404201911230 Food 10000 10000
 JasonChan Daily 0704201919170 Game 1000 1000
 JasonChan Monthly 0704201919170 Food 1000 1000
 William Daily 0704201919400 Game 1000 1000
-Nelson Daily 1404201914480 Food 100 100
-Nelson Monthly 1404201914500 Entertainment 680 680
+Nelson Daily 2104201924130 Food 100 80
+Nelson Monthly 1404201950140 Entertainment 680 680

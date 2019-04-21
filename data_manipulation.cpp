@@ -367,7 +367,7 @@ void RenewBudget(vector<Budget> &budget) {
 			i.date.timestamp=date.timestamp;  // Update timestamp
 			ExtractTime(i.date,true);
 		}
-		else if(i.period=="Monthly" && i.date.timestamp.substr(2,6)!=date.timestamp.substr(0,8)) {
+		else if(i.period=="Monthly" && i.date.timestamp.substr(2,6)!=date.timestamp.substr(2,6)) {
 			i.remain=i.amount;
 			i.date.timestamp=date.timestamp; // Update timestamp
 			ExtractTime(i.date,true);
