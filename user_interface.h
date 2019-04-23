@@ -8,6 +8,7 @@ void MainMenu(User&,vector<string>);
 void Create_ACCT(User&,string);
 void Delete_ACCT(User&,vector<string>);
 void View_Database(User&,string);
+void View_ACCT(User&,string);
 void Add_Record(User&,vector<string>);
 void Delete_Record(User&,vector<string>);
 void View_Record(User&,string,bool);

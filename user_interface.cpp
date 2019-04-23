@@ -85,7 +85,7 @@ void MainMenu(User &user,vector<string> database) {
 				Delete_ACCT(user,{database[1],database[2]});
 				break;
 			case 3:
-				View_Database(user,database[1]);
+				View_ACCT(user,database[1]);
 				break;
 			case 4:
 				Add_Record(user,{database[1],database[2]});
@@ -215,6 +215,12 @@ void View_Database(User &user,string database) {
 		}
 	}
 	fin.close();
+}
+void View_ACCT(User &user,string database) {
+	for(auto &i : user.account) {
+		cout<<"Name: "<<i.name<<" Amount: $"<<i.amount<<endl;
+	}
+	return;
 }
 void Add_Record(User &user,vector<string> database) {
 	int element=0;
@@ -356,9 +362,9 @@ void View_Record(User &user,string database,bool show) {
 					if (!show) {
 						cout<<left<<setw(2)<<length<<" - ";
 					}
-					cout<<left<<setw(35)<<line.substr(0,line.rfind(" "))<<' ';
-					cout<<DATE.day<<'/'<<DATE.month<<'/'<<DATE.year<<'-';
-					cout<<DATE.minute<<":"<<DATE.hour<<' '<<weekday<<endl;
+					cout<<left<<setw(35)<<setfill(' ')<<line.substr(0,line.rfind(" "))<<' ';
+					cout<<right<<setw(2)<<setfill('0')<<DATE.day<<'/'<<setw(2)<<setfill('0')<<DATE.month<<'/'<<DATE.year<<'-';
+					cout<<setw(2)<<setfill('0')<<DATE.hour<<":"<<setw(2)<<setfill('0')<<DATE.minute<<' '<<weekday<<endl;
 				}
 			}
 			turn++;
@@ -379,9 +385,9 @@ void View_Record(User &user,string database,bool show) {
 					if (!show) {
 						cout<<left<<setw(2)<<length<<" - ";
 					}
-					cout<<left<<setw(35)<<line.substr(0,line.rfind(" "))<<' ';
-					cout<<DATE.day<<'/'<<DATE.month<<'/'<<DATE.year<<'-';
-					cout<<DATE.minute<<":"<<DATE.hour<<' '<<weekday<<endl;
+					cout<<left<<setw(35)<<setfill(' ')<<line.substr(0,line.rfind(" "))<<' ';
+					cout<<right<<setw(2)<<setfill('0')<<DATE.day<<'/'<<setw(2)<<setfill('0')<<DATE.month<<'/'<<DATE.year<<'-';
+					cout<<setw(2)<<setfill('0')<<DATE.hour<<":"<<setw(2)<<setfill('0')<<DATE.minute<<' '<<weekday<<endl;
 				}
 			}
 			turn++;
