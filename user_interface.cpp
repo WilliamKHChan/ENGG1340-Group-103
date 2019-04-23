@@ -82,16 +82,16 @@ void MainMenu(User &user,vector<string> database) {
 				Create_ACCT(user,database[1]);
 				break;
 			case 2:
-				Delete_ACCT(user,database[1]);
+				Delete_ACCT(user,{database[1],database[2]});
 				break;
 			case 3:
 				View_Database(user,database[1]);
 				break;
 			case 4:
-				Add_Record(user,database[2]);
+				Add_Record(user,{database[1],database[2]});
 				break;
 			case 5:
-				Delete_Record(user,database[2]);
+				Delete_Record(user,{database[1],database[2]});
 				break;
 			case 6:
 				View_Record(user,database[2],true);
@@ -161,8 +161,18 @@ void Create_ACCT(User &user,string database) {
 
 			}
 		}
-		else
+		else {
 			replace=2;
+			Account ACCT;
+			ACCT.name=ACCT_type;
+			ACCT.amount=Amount;
+			user.account.push_back(ACCT);
+			//for (auto i : user.account)
+				//cout<<i.name<<' '<<i.amount<<endl;
+			fout.close();
+			fin.close();
+			Update(user,database);
+		}
 	}
 	if (replace==0) {
 	cout<<"Write into Account.txt\n";
@@ -172,17 +182,23 @@ void Create_ACCT(User &user,string database) {
   }
 	return;
 }
-void Delete_ACCT(User &user,string database) {
-	View_Database(user,database);
-	int Account;
+void Delete_ACCT(User &user,vector<string> database) {
+	View_Database(user,database[0]);
+	int index;
 	cout<<"Please enter your choice : ";
-	cin>>Account;
-	cout<<"Delete Account "<<Account<<endl;
-	Account-=1;
-	user.account.erase(user.account.begin()+Account);
-	//for (auto i : user.account)
-		//cout<<i.name<<' '<<i.amount<<endl;
-	Update(user,database);
+	cin>>index;
+	cout<<"Delete Account "<<index<<endl;
+	index--;
+	for(int i=0;i<user.record.size();i++) {
+		if(user.record[i].account==user.account[index].name) {
+			user.record.erase(user.record.begin()+i);
+			i--;
+		}
+	}
+	user.account.erase(user.account.begin()+index);
+	for(auto &i : database) {
+		Update(user,i);
+	}
 }
 void View_Database(User &user,string database) {
 	string line,username;
@@ -200,50 +216,48 @@ void View_Database(User &user,string database) {
 	}
 	fin.close();
 }
-void Add_Record(User &user,string database) {
-	string Account,Amount,Category,line;
+void Add_Record(User &user,vector<string> database) {
 	int element=0;
- 	double amount,diff;
-	Time date;
-	GetCurrentTime(date);
+ 	double diff;
+	Record rd;
+	GetCurrentTime(rd.date);
 	cout<<"Please enter (Account) (+/-Amount) (Category) : ";
-	cin>>Account>>Amount>>Category;
-	//amount=atof((Amount.substr(1)).c_str());
-	istringstream iss(Amount);
-	iss >> amount;
+	cin>>rd.account>>rd.income>>rd.type;
 	ofstream fout;
-	fout.open(database, ios::app);
+	fout.open(database[1], ios::app);
 	if (fout.fail())
 		exit(1);
-	fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
-	fout<<date.timestamp<<endl;
+	fout<<user.username<<' '<<rd.account<<' '<<rd.income<<' '<<rd.type<<' ';
+	fout<<rd.date.timestamp<<endl;
 	fout.close();
 	for (auto i : user.budget) {
-		if (i.type==Category) {
-			diff=i.remain+amount;
+		if (i.type==rd.type) {
+			diff=i.remain+rd.income;
 			user.budget[element].remain=diff;
 			if (diff>=0)
-				cout<<Category<<"-"<<i.period<<" budget remaining : "<<diff<<endl;
+				cout<<rd.type<<"-"<<i.period<<" budget remaining : "<<diff<<endl;
 			else
-				cout<<Category<<"-"<<i.period<<" budget overspent : "<<diff<<endl;
+				cout<<rd.type<<"-"<<i.period<<" budget overspent : "<<diff<<endl;
 			break;
 		}
 		element++;
 	}
 	element=0;
 	for (auto i : user.account) {
-		if (i.name==Account) {
-			diff=i.amount+amount;
+		if (i.name==rd.account) {
+			diff=i.amount+rd.income;
 			cout<<"Account - "<<i.name<<" : $"<<diff<<endl;
 			user.account[element].amount=diff;
 			break;
 		}
 		element++;
 	}
-	Update(user,"Budget.txt");
-	Update(user,"Account.txt");
+	user.record.push_back(rd);
+	for(auto &i : database) {
+		Update(user,i);
+	}
 }
-void Delete_Record(User &user,string database) {
+void Delete_Record(User &user,vector<string> database) {
 	int choice,index,begin,end;
 	string date,DDMMYYYY;
 	int pos=0;
@@ -253,14 +267,22 @@ void Delete_Record(User &user,string database) {
 	cout<<"\tPlease enter your choice : ";
 	cin>>choice;
 	if (choice==2) {
-		View_Record(user,database,false);
+		View_Record(user,database[1],false);
 		//for (auto i : user.record)
 			//cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
 		cout<<"\tPlease enter the index : ";
 		cin>>index;
+		for(auto &i : user.account) {
+			if(i.name==user.record[index].account) {
+				i.amount-=user.record[index].income;
+			}
+		}
+		for(auto &i : user.budget) {
+			if(i.type==user.record[index].type) {
+				i.remain-=user.record[index].income;
+			}
+		}
 		user.record.erase(user.record.begin()+index);
-		Update(user,database);
-
 	}
 	else if (choice==1) {
 		for (auto i : user.record)
@@ -280,10 +302,24 @@ void Delete_Record(User &user,string database) {
 			}
 			pos++;
 		}
+		for(int i=begin;i<end;i++) {
+			for(auto &j : user.account) {
+				if(j.name==user.record[i].account) {
+					j.amount-=user.record[i].income;
+				}
+			}
+			for(auto &k : user.budget) {
+				if(k.type==user.record[index].type) {
+					k.remain-=user.record[index].income;
+				}
+			}
+		}
 		user.record.erase(user.record.begin()+begin,user.record.begin()+end);
 		//for (auto i : user.record)
 			//cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
-		Update(user,database);
+	}
+	for(auto &i : database) {
+		Update(user,i);
 	}
 	return;
 }
@@ -419,7 +455,7 @@ void Set_Auto_Record(User &user,string database) {
 	return;
 }
 void SetBudget(User &user,vector<string> database) {
-	int choice,item,count;
+	int choice,count,index;
 	Budget bg;
 	do {
 		cout<<"\n1 View budgets\t\t2 Add budget\t3 Change budget";
@@ -457,11 +493,9 @@ void SetBudget(User &user,vector<string> database) {
 					count++;
 				}
 				cout<<"\nPlease choose: ";
-				cin>>item;
-				cout<<"Please enter period, type, amount: ";
-				InputBudget(bg);
-				user.budget.erase(user.budget.begin()+count-1);
-				user.budget.push_back(bg);
+				cin>>index;
+				cout<<"Please enter (Daily/Monthly) (Category) (Amount): ";
+				InputBudget(user.budget[index-1]);
 				break;
 			case 4:
 				if(user.budget.empty()) {
@@ -475,7 +509,7 @@ void SetBudget(User &user,vector<string> database) {
 					count++;
 				}
 				cout<<"\nPlease choose: ";
-				cin>>item;
+				cin>>index;
 				user.budget.erase(user.budget.begin()+count-1);
 				break;
 			case 5:
