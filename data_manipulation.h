@@ -7,6 +7,11 @@
 #include <ctime>
 #include <cstdio>
 #include <iomanip>
+#include <algorithm>
+#include <map>
+#ifndef data_manipulation
+#define data_manipulation 1
+#endif
 using namespace std;
 class Time {
 public:
@@ -16,6 +21,7 @@ public:
 	int day;
 	int hour;
 	int minute;
+	int wday;
 };
 class Account {
 public:
@@ -27,15 +33,17 @@ public:
 	string account;
 	double income;
 	string type;
-	Time time;
+	Time date;
 };
 class Budget {
 public:
-	Time start;
-	Time end;
+	string period;
+	Time date;
 	string type;
 	double amount;
+	double remain;
 };
+
 class User {
 public:
 	string username;
@@ -47,7 +55,15 @@ public:
 };
 bool LoadAll(User&,vector<string>);
 bool Load(User&,string);
+int Day_passed(int,int,int);
+void Activate_Auto_Record(User&,vector<string>);
+bool should_Update(User&,string,string);
+void Auto_insert_time(Time&,string);
 bool UpdateAll(const User&,vector<string>,string="");
 bool Update(const User&,string,string="");
+string Identify_Weekday(int);
 void Rename(string,string);
 void ExtractTime(Time&,bool);
+void GetCurrentTime(Time&);
+void InputBudget(Budget&);
+void RenewBudget(vector<Budget>&);

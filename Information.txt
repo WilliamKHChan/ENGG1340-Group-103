@@ -1,2 +1,9 @@
 Information
-JasonChan jc1234 Chan Tai Man
+Username Password Name_ID
+
+User0001 user1 Chow Siu Ming
+AngelWen angel Wen Sin Yi
+abc abc asd
+JasonChan jc Chan Tai Man
+William william Chan Kwok Hei
+Nelson 2 Nelson Test
