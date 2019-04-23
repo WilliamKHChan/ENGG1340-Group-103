@@ -323,8 +323,8 @@ void ExtractTime(Time &time,bool isExtract) { // Convert string into int
 		time.year=atoi(time.timestamp.substr(4,4).c_str());
 		time.month=atoi(time.timestamp.substr(2,2).c_str());
 		time.day=atoi(time.timestamp.substr(0,2).c_str());
-		time.hour=atoi(time.timestamp.substr(10,2).c_str());
-		time.minute=atoi(time.timestamp.substr(8,2).c_str());
+		time.hour=atoi(time.timestamp.substr(8,2).c_str());
+		time.minute=atoi(time.timestamp.substr(10,2).c_str());
 		time.wday=atoi(time.timestamp.substr(12,1).c_str());
 	}
 	else {
