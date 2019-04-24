@@ -388,10 +388,10 @@ void InputBudget(Budget &budget) {
 	GetCurrentTime(budget.date);
 	return;
 }
-void RenewBudget(vector<Budget> &budget) {
+void RenewBudget(User &user,string database) {
 	Time date;
 	GetCurrentTime(date);
-	for(auto &i : budget) {
+	for(auto &i : user.budget) {
 		if(i.period=="Daily" && i.date.timestamp.substr(0,8)!=date.timestamp.substr(0,8)) {
 			cout<<"Daily Budget renewed !\n";
 			i.remain=i.amount;
@@ -405,5 +405,6 @@ void RenewBudget(vector<Budget> &budget) {
 			ExtractTime(i.date,true);
 		}
 	}
+	Update(user,database);
 	return;
 }
