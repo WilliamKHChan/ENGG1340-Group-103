@@ -57,7 +57,7 @@ bool LoadAll(User&,vector<string>);
 bool Load(User&,string);
 int Day_passed(int,int,int);
 void Activate_Auto_Record(User&,vector<string>);
-bool should_Update(User&,string,string);
+bool should_Update(User&,string,string,int&);
 void Auto_insert_time(Time&,string);
 bool UpdateAll(const User&,vector<string>,string="");
 bool Update(const User&,string,string="");

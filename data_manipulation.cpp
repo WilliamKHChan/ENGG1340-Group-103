@@ -131,11 +131,12 @@ void Auto_insert_time(Time &date,string Timestamp) {
 	date.minute=atoi(Timestamp.substr(10,2).c_str());
 	return;
 }
-bool should_Update(User &user,string record_time,string line) {
+bool should_Update(User &user,string record_time,string line,int &Count) {
 	Time time;
 	GetCurrentTime(time);
 	//int current_month=5;
 	int current_month=time.month;
+	//cout<<"current_month = "<<current_month<<endl;
 	double amount,diff;
 	Record rd;
 	string D,data,Timestamp,date1,date2,date3,tail,name,account;
@@ -147,7 +148,7 @@ bool should_Update(User &user,string record_time,string line) {
 	iss>>amount;
 	rd.income=amount;
 	iss>>rd.type;
-	int original_wday,days_in_month,d,element,next_month;
+	int days_in_month,d,element,next_month;
 	string user_input_days=record_time.substr(19);
 	int weekday=atoi((record_time.substr(12,1)).c_str());
 	int DD=atoi((record_time.substr(0,2)).c_str());
@@ -155,9 +156,9 @@ bool should_Update(User &user,string record_time,string line) {
 	int MM=atoi((record_time.substr(2,2)).c_str());
 	int days_elapsed;
 	d=atoi((time.timestamp.substr(0,2)).c_str());
-	if (current_month-MM==0)
+	if (current_month-MM==0) // In same month
 		days_elapsed=d-DD;
-	else
+	else // Not in same month
 		days_elapsed=d+Day_passed(MM,current_month,DD);
 	int total_days=days_elapsed;
 	int update=-1;
@@ -185,7 +186,9 @@ bool should_Update(User &user,string record_time,string line) {
 				element++;
 			}
 			days_in_month=Identify_Month(MM);
+			//cout<<"days_in_month = "<<days_in_month<<endl;
 			update=0;
+			//cout<<"DD+count_days = "<<DD+count_days<<endl;
 			if (DD+count_days>days_in_month) {
 				date1=to_string(DD+count_days-days_in_month);
 				next_month=1;
@@ -200,17 +203,19 @@ bool should_Update(User &user,string record_time,string line) {
 			if (next_month==1)
 				date2=to_string(current_month);
 			else
-				date2=to_string(current_month-1);
+				date2=to_string(MM);
 
 			if (date2.length()==1)
 				date2="0"+date2;
 			date3=D;
 			Timestamp=date1+date2+record_time.substr(4,8)+date3+tail;
+			//cout<<"Month = "<<date2<<endl;
 			//cout<<"Timestamp = "<<Timestamp<<endl;
 			rd.date.timestamp=Timestamp;
 			rd.date.wday=atoi(D.c_str());
 			Auto_insert_time(rd.date,Timestamp);
 			user.record.insert(user.record.begin(),rd);
+			Count++;
 		}
 	}
 if (update!=0)
@@ -220,7 +225,8 @@ else
 }
 void Activate_Auto_Record(User &user,vector<string> database) {
 	int turn=1;
-	int num,pos;
+	int num,pos,count_records;
+	count_records=0;
 	double amount;
 	string line,info,user_data,str_num;
 	ifstream fin("Auto_Record.txt");
@@ -236,8 +242,11 @@ void Activate_Auto_Record(User &user,vector<string> database) {
 				str_num=to_string(num);
 				user_data=user.username+" "+i.account+" "+str_num+" "+i.type;
 				if (i.date.timestamp.find("Auto")!=string::npos && user_data==info) {
-					if (should_Update(user,i.date.timestamp,line)) {
-						cout<<"There is a Auto-Record \n";
+					if (should_Update(user,i.date.timestamp,line,count_records)) {
+						if (count_records==1)
+							cout<<"There is a Auto-Record\n";
+						else if (count_records>1)
+							cout<<"There are "<<count_records<<" Auto-Records\n";
 					}
 					break;
 				}
@@ -247,8 +256,8 @@ void Activate_Auto_Record(User &user,vector<string> database) {
 	}
 	fin.close();
 	reverse(user.record.begin(), user.record.end());
-//	for (auto i : user.record)
-	//	cout<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.date.timestamp<<endl;
+	//for (auto i : user.record)
+		//cout<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.date.timestamp<<endl;
 	Update(user,"Record.txt");
 	Update(user,"Account.txt");
 }
@@ -384,11 +393,13 @@ void RenewBudget(vector<Budget> &budget) {
 	GetCurrentTime(date);
 	for(auto &i : budget) {
 		if(i.period=="Daily" && i.date.timestamp.substr(0,8)!=date.timestamp.substr(0,8)) {
+			cout<<"Daily Budget renewed !\n";
 			i.remain=i.amount;
 			i.date.timestamp=date.timestamp;  // Update timestamp
 			ExtractTime(i.date,true);
 		}
 		else if(i.period=="Monthly" && i.date.timestamp.substr(2,6)!=date.timestamp.substr(2,6)) {
+			cout<<"Monthly Budget renewed !\n";
 			i.remain=i.amount;
 			i.date.timestamp=date.timestamp; // Update timestamp
 			ExtractTime(i.date,true);

@@ -5,5 +5,5 @@ User0001 Bank 90000
 JasonChan Bank 10000
 JasonChan Card 5000
 JasonChan Cash 9000
-Nelson Bank 20000
-Nelson Investment 80000
+Nelson Bank 19961
+Nelson Investment 10000

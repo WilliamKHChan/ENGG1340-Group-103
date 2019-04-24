@@ -218,7 +218,8 @@ void View_Database(User &user,string database) {
 }
 void View_ACCT(User &user,string database) {
 	for(auto &i : user.account) {
-		cout<<"Name: "<<i.name<<" Amount: $"<<i.amount<<endl;
+		cout<<"\tAccount Name: ";
+		cout<<left<<setw(15)<<i.name<<" Amount: $"<<i.amount<<endl;
 	}
 	return;
 }
@@ -241,9 +242,10 @@ void Add_Record(User &user,vector<string> database) {
 			diff=i.remain+rd.income;
 			user.budget[element].remain=diff;
 			if (diff>=0)
-				cout<<rd.type<<"-"<<i.period<<" budget remaining : "<<diff<<endl;
+				cout<<rd.type<<" : "<<i.period<<" budget remaining : $"<<diff<<endl;
 			else
-				cout<<rd.type<<"-"<<i.period<<" budget overspent : "<<diff<<endl;
+				cout<<rd.type<<" : "<<i.period<<" budget overspent : $"<<diff<<endl;
+			Update(user,"Budget.txt");
 			break;
 		}
 		element++;
@@ -252,16 +254,15 @@ void Add_Record(User &user,vector<string> database) {
 	for (auto i : user.account) {
 		if (i.name==rd.account) {
 			diff=i.amount+rd.income;
-			cout<<"Account - "<<i.name<<" : $"<<diff<<endl;
+			cout<<"Account : "<<i.name<<" : $"<<diff<<endl;
 			user.account[element].amount=diff;
 			break;
 		}
 		element++;
 	}
 	user.record.push_back(rd);
-	for(auto &i : database) {
-		Update(user,i);
-	}
+	Update(user,"Record.txt");
+	Update(user,"Account.txt");
 }
 void Delete_Record(User &user,vector<string> database) {
 	int choice,index,begin,end;
@@ -471,7 +472,7 @@ void SetBudget(User &user,vector<string> database) {
 		switch(choice) {
 			case 1:
 				cout.setf(ios::fixed,ios::floatfield);
-				cout.setf(ios::showpoint);
+				//cout.setf(ios::showpoint);
 				cout<<setprecision(1);
 				cout<<endl;
 				if(user.budget.empty()) {
@@ -479,7 +480,9 @@ void SetBudget(User &user,vector<string> database) {
 					break;
 				}
 				for(auto i:user.budget) {
-					cout<<i.type<<" ("<<i.period<<"): $"<<i.amount<<" Remain: $"<<i.remain<<endl;
+					cout<<left<<setw(13)<<i.type;
+					cout<<" ("<<left<<setw(7)<<i.period<<"): $";
+					cout<<i.amount<<" Remain: $"<<i.remain<<endl;
 				}
 				break;
 			case 2:
@@ -565,6 +568,7 @@ void ShowReport(User &user,vector<string> database) {
 			}
 		}
 	}
+	cout<<"---------------------------------------------------\n";
 	cout<<"\nDate: ";
 	cout<<date.substr(0,2)<<"/";
 	if(l==0) {
@@ -613,6 +617,7 @@ void ShowReport(User &user,vector<string> database) {
 			}
 		}
 	}
+	cout<<"---------------------------------------------------\n";
 	return;
 }
 void ChangePassword(User &user,vector<string> database) {
