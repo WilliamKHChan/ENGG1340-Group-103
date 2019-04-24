@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-std=c++11
+CXXFLAGS=-std=c++11 -fno-stack-protector
 OBJ=Accounting_system.o data_manipulation.o user_interface.o
 all: Accounting_system
 Accounting_system: $(OBJ)
