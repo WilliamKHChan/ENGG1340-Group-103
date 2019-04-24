@@ -11,7 +11,7 @@ void Login(User &user,vector<string> database) {
 			cout<<"Invalid.\n";
 		}
 		else {													// Login succeed
-			RenewBudget(user.budget);     // Update data for calcualtion
+			RenewBudget(user,database[3]);     // Update data for calcualtion
 			Activate_Auto_Record(user,database); // Decide if auto-record is needed
 		}
 	}
@@ -537,7 +537,7 @@ void ShowReport(User &user,vector<string> database) {
 	int l,u;
 	bool showBudget=false;
 	double income=0,expense=0;
-	map<string,double> category,account;
+	map<string,double> map_expense,map_income,account;
 	cout<<"For Monthly Report: Enter MMYYYY \n";
 	cout<<"For Daily Report: Enter DDMMYYYY \nEnter : ";
 	cin>>date;
@@ -552,14 +552,20 @@ void ShowReport(User &user,vector<string> database) {
 	for(auto &i : user.record) {
 		if(i.date.timestamp.substr(l,u)==date) {
 			if(i.income>=0) {
+				if(map_income.find(i.type)==map_income.end()) {
+					map_income[i.type]=i.income;
+				}
+				else {
+					map_income[i.type]+=i.income;
+				}
 				income+=i.income;
 			}
 			else {
-				if(category.find(i.type)==category.end()) {
-					category[i.type]=-i.income;
+				if(map_expense.find(i.type)==map_expense.end()) {
+					map_expense[i.type]=-i.income;
 				}
 				else {
-					category[i.type]+=-i.income;
+					map_expense[i.type]+=-i.income;
 				}
 				expense+=-i.income;
 			}
@@ -584,12 +590,21 @@ void ShowReport(User &user,vector<string> database) {
 	cout<<"\nSummary:\nTotal income: $"<<income<<endl;
 	cout<<"Total expense: $"<<expense<<endl;
 	cout<<"Net income: $"<<income-expense<<endl;
-	cout<<"\nExpense by category:\n";
-	if(category.empty()) {
+	cout<<"\nIncome by category:\n";
+	if(map_income.empty()) {
 		cout<<"Empty\n";
 	}
 	else {
-		for(auto &i : category) {
+		for(auto &i : map_income) {
+			cout<<i.first<<": $"<<i.second<<" ("<<(i.second/income*100)<<"%)"<<endl;
+		}
+	}
+	cout<<"\nExpense by category:\n";
+	if(map_expense.empty()) {
+		cout<<"Empty\n";
+	}
+	else {
+		for(auto &i : map_expense) {
 			cout<<i.first<<": $"<<i.second<<" ("<<(i.second/expense*100)<<"%)"<<endl;
 		}
 	}
@@ -602,9 +617,6 @@ void ShowReport(User &user,vector<string> database) {
 		}
 		else {
 			for(auto &i : user.budget) {
-				if(l==0 && i.period=="Monthly") {
-					continue;
-				}
 				cout<<i.type<<" ("<<i.period<<"): $"<<i.amount<<" Remain: $"<<i.remain;
 				if(i.remain<0) {
 					cout<<" Overspent warning!";

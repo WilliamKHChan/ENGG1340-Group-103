@@ -379,10 +379,10 @@ void InputBudget(Budget &budget) {
 	GetCurrentTime(budget.date);
 	return;
 }
-void RenewBudget(vector<Budget> &budget) {
+void RenewBudget(User &user,string database) {
 	Time date;
 	GetCurrentTime(date);
-	for(auto &i : budget) {
+	for(auto &i : user.budget) {
 		if(i.period=="Daily" && i.date.timestamp.substr(0,8)!=date.timestamp.substr(0,8)) {
 			i.remain=i.amount;
 			i.date.timestamp=date.timestamp;  // Update timestamp
@@ -394,5 +394,6 @@ void RenewBudget(vector<Budget> &budget) {
 			ExtractTime(i.date,true);
 		}
 	}
+	Update(user,database);
 	return;
 }
