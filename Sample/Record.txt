@@ -1,0 +1,4 @@
+Record
+Username|Account|Amount|Category|Timestamp
+
+

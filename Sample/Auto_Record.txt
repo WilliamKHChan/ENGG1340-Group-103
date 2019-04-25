@@ -1,0 +1,3 @@
+Auto_Record
+Username|Account|Amount|Category|Timestamp
+
