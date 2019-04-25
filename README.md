@@ -177,6 +177,8 @@ Food
 ```
 #### Sample run
 A sample run is provided in the folder "Sample".
+
+In Linux OS,
 1. Run command `./Accounting_system < create_user.txt`.
 2. Run command `./Accounting_system < sample_run.txt`.
 
