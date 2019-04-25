@@ -204,7 +204,7 @@ Income by category:
 Empty
 
 Expense by category:
-Food: $200.0 (100.0%)
+Food: $100.0 (100.0%)
 
 ---------------------------------------------------
 ```
