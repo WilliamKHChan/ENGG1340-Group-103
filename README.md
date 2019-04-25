@@ -175,3 +175,37 @@ Please enter (Account) (+/-Amount) (Category) : Bank
 -100
 Food
 ```
+#### Sample run
+A sample run is provided in the folder "Sample".
+1. Run command `./Accounting_system < create_user.txt`.
+2. Run command `./Accounting_system < sample_run.txt`.
+
+The sample run will create a user called "User_Test" with password "test". It will create and view an account, add and view a record and finally generate a report.
+
+Possible sample output (Omitted non-output):
+```
+Account Name: Bank            Amount: $10000
+...
+User_Test Bank -100 Food            25/04/2019-20:27 Thu
+...
+---------------------------------------------------
+
+Date: 04/2019
+
+Accounts:
+Bank: $9900.0
+
+Summary:
+Total income: $0.0
+Total expense: $100.0
+Net income: $-100.0
+
+Income by category:
+Empty
+
+Expense by category:
+Food: $200.0 (100.0%)
+
+---------------------------------------------------
+```
+Notice that the default date is 04/2019. It can be changed in "sample_run.txt".
