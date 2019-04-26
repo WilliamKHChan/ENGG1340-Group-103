@@ -83,7 +83,8 @@ To avoid the daunting corollary of neglecting own financail status, one must set
 
 *Assumptions:*
 
-1. The user must type in the correct commands which we will provide a manual of them in order to execute the program properly.
+1. The user must follow the command manual in order to execute the program properly.
+2. Users can only add records in the cuurent date
 
 <a name="specification"></a>
 ## Input/output Specifications
