@@ -63,7 +63,6 @@ public:
 class User {
 public:
 	string username;			// The username of the user
-	string name;				// The full name of the user
 	string password;			// Login password
 	vector<Account> account;	// Accounts that a user has
 	vector<Record> record;		// Transaction records

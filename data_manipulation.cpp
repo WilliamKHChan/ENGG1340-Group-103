@@ -24,11 +24,6 @@ bool Load(User &user,string filename) {
 				iss>>field;
 				if(field==user.password) {
 					flag=true;
-					user.name="";
-					while(iss>>field) {
-						user.name+=field+" ";
-					}
-					user.name.pop_back();
 					break;
 				}
 				else {
@@ -276,7 +271,7 @@ bool Update(const User &user,string filename,string old_username) {
 		}
 	}
 	if(name=="Information") {
-		temp<<user.username<<" "<<user.password<<" "<<user.name<<endl;
+		temp<<user.username<<" "<<user.password<<endl;
 	}
 	else if(name=="Account") {
 		for(auto i : user.account)

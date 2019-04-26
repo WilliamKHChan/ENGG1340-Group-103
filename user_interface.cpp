@@ -21,8 +21,6 @@ void CreateAccount(User &user,vector<string> database) {
 	string password;
 	bool success;
 	do {
-		cin.clear();
-		cin.sync();
 		success=true;
 		cout<<"Username: ";
 		cin>>user.username;
@@ -30,9 +28,6 @@ void CreateAccount(User &user,vector<string> database) {
 		cin>>user.password;
 		cout<<"Re-type password: ";
 		cin>>password;
-		cout<<"Name: ";
-		cin.ignore();
-		getline(cin,user.name);
 		if(password!=user.password) {
 			cout<<"Password not match.\n";
 			success=false;
@@ -68,8 +63,6 @@ void LoginScreen(User &user,vector<string> database) {
 void MainMenu(User &user,vector<string> database) {
 	int choice;
 	do {
-		cin.clear();
-		cin.sync();
 		cout<<"========================================";
 		cout<<"\n1 Create Account\t2 Delete Account\n3 View Account\t\t4 Add Record";
 		cout<<"\n5 Delete Record\t\t6 View Record\n7 Set Auto-Record";
