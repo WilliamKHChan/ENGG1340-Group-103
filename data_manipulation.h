@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <map>
+#include <functional>
 #ifndef data_manipulation
 #define data_manipulation 1
 #endif
@@ -165,3 +166,7 @@ void InputBudget(Budget&);
 			 database - the name of the budget database
    Output  : User.Budget and budget database updated */
 void RenewBudget(User&,string);
+
+/* Function: Validate input. Input until valid
+   Input   : Lambda function with bool as return value */
+void Validate(function<bool()>);

@@ -10,9 +10,9 @@ void Login(User &user,vector<string> database) {
 		if(!success) {                  // Login fail
 			cout<<"Invalid.\n";
 		}
-		else {													// Login succeed
-			RenewBudget(user,database[3]);     // Update data for calcualtion
-			Activate_Auto_Record(user,database); // Decide if auto-record is needed
+		else {										// Login succeed
+			RenewBudget(user,database[3]);     		// Update data for calcualtion
+			Activate_Auto_Record(user,database); 	// Decide if auto-record is needed
 		}
 	}
 	while(!success);
@@ -88,7 +88,7 @@ void MainMenu(User &user,vector<string> database) {
 				View_ACCT(user,database[1]);
 				break;
 			case 4:
-				Add_Record(user,{database[1],database[2]});
+				Add_Record(user,database);
 				break;
 			case 5:
 				Delete_Record(user,{database[1],database[2]});
@@ -101,7 +101,6 @@ void MainMenu(User &user,vector<string> database) {
 				break;
 			case 8:
 				SetBudget(user,database);
-				Update(user,database[3]);
 				break;
 			case 9:
 				ShowReport(user,database);
@@ -151,8 +150,6 @@ void Create_ACCT(User &user,string database) {
 					ACCT.name=ACCT_type;
 					ACCT.amount=Amount;
 					user.account.push_back(ACCT);
-					//for (auto i : user.account)
-						//cout<<i.name<<' '<<i.amount<<endl;
 					fout.close();
 					fin.close();
 					Update(user,database);
@@ -167,8 +164,6 @@ void Create_ACCT(User &user,string database) {
 			ACCT.name=ACCT_type;
 			ACCT.amount=Amount;
 			user.account.push_back(ACCT);
-			//for (auto i : user.account)
-				//cout<<i.name<<' '<<i.amount<<endl;
 			fout.close();
 			fin.close();
 			Update(user,database);
@@ -210,7 +205,7 @@ void View_Database(User &user,string database) {
 		istringstream iss(line);
 		iss>>username;
 		if (username==user.username) {
-			cout<<"\t\t"<<num<<" "<<line<<endl;
+			cout<<num<<" "<<line<<endl;
 			num++;
 		}
 	}
@@ -218,18 +213,23 @@ void View_Database(User &user,string database) {
 }
 void View_ACCT(User &user,string database) {
 	for(auto &i : user.account) {
-		cout<<"\tAccount Name: ";
+		cout<<"Account Name: ";
 		cout<<left<<setw(15)<<i.name<<" Amount: $"<<i.amount<<endl;
 	}
 	return;
 }
 void Add_Record(User &user,vector<string> database) {
-	int element=0;
  	double diff;
 	Record rd;
 	GetCurrentTime(rd.date);
-	cout<<"Please enter (Account) (+/-Amount) (Category) : ";
-	cin>>rd.account>>rd.income>>rd.type;
+	Validate([&]() {
+		cout<<"Please enter (Account) (+/-Amount) (Category) : ";
+		if(!(cin>>rd.account) || !(cin>>rd.income) || !(cin>>rd.type)) {
+			cout<<"Invalid.\n";
+			return false;
+		}
+		return true;
+	});
 	ofstream fout;
 	fout.open(database[1], ios::app);
 	if (fout.fail())
@@ -237,45 +237,48 @@ void Add_Record(User &user,vector<string> database) {
 	fout<<user.username<<' '<<rd.account<<' '<<rd.income<<' '<<rd.type<<' ';
 	fout<<rd.date.timestamp<<endl;
 	fout.close();
-	for (auto i : user.budget) {
+	for (auto &i : user.budget) {
 		if (i.type==rd.type) {
 			diff=i.remain+rd.income;
-			user.budget[element].remain=diff;
+			i.remain=diff;
 			if (diff>=0)
 				cout<<rd.type<<" : "<<i.period<<" budget remaining : $"<<diff<<endl;
 			else
 				cout<<rd.type<<" : "<<i.period<<" budget overspent : $"<<diff<<endl;
-			Update(user,"Budget.txt");
+			Update(user,database[3]);
 			break;
 		}
-		element++;
 	}
-	element=0;
-	for (auto i : user.account) {
+	for (auto &i : user.account) {
 		if (i.name==rd.account) {
 			diff=i.amount+rd.income;
 			cout<<"Account : "<<i.name<<" : $"<<diff<<endl;
-			user.account[element].amount=diff;
+			i.amount=diff;
 			break;
 		}
-		element++;
 	}
 	user.record.push_back(rd);
-	Update(user,"Record.txt");
-	Update(user,"Account.txt");
+	Update(user,database[1]);
+	Update(user,database[2]);
 }
 void Delete_Record(User &user,vector<string> database) {
 	int choice,index,begin,end;
 	string date,DDMMYYYY;
 	int pos=0;
 	bool first=true;
-	cout<<"\t1 Delete records of the entire day\n";
-	cout<<"\t2 Delete a single record in a day\n";
-	cout<<"\tPlease enter your choice : ";
-	cin>>choice;
+	cout<<"1 Delete records of the entire day\n";
+	cout<<"2 Delete a single record in a day\n";
+	Validate([&]() {
+		cout<<"Please enter your choice : ";
+		if(!(cin>>choice) || (choice<1 || choice>2)) {
+			cout<<"Invalid.\n";
+			return false;
+		}
+		return true;
+	});
 	if (choice==2) {
 		View_Record(user,database[1],false);
-		cout<<"\tPlease enter the index : ";
+		cout<<"Please enter the index : ";
 		cin>>index;
 		for(auto &i : user.account) {
 			if(i.name==user.record[index].account) {
@@ -292,7 +295,7 @@ void Delete_Record(User &user,vector<string> database) {
 	else if (choice==1) {
 		for (auto i : user.record)
 			cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
-		cout<<"\tPlease enter the date (DDMMYYYY) : ";
+		cout<<"Please enter the date (DDMMYYYY) : ";
 		cin>>date;
 		for (auto i : user.record) {
 			DDMMYYYY=i.date.timestamp.substr(0,8);
@@ -326,21 +329,27 @@ void Delete_Record(User &user,vector<string> database) {
 	return;
 }
 void View_Record(User &user,string database,bool show) {
-	int turn=1;
-	int length=-1;
+	int turn=1,length=-1;
+	string date,line,data,weekday,name;
+	Time DATE;
 	ifstream fin(database);
 	if (fin.fail())
 		exit(1);
-	if (show) {
-		cout<<"For Monthly Record: Enter MMYYYY\n";
-		cout<<"For Daily Record: Enter DDMMYYYY\n";
-		cout<<"Enter : ";
-	}
-	else
-		cout<<"Please enter the date (DDMMYYYY) : ";
-	string date,line,data,weekday,name;
-	Time DATE;
-	cin>>date;
+	Validate([&]() {
+		if (show) {
+			cout<<"For Monthly Record: Enter MMYYYY\n";
+			cout<<"For Daily Record: Enter DDMMYYYY\n";
+			cout<<"Enter : ";
+		}
+		else
+			cout<<"Please enter the date (DDMMYYYY) : ";
+		cin>>date;
+		if(date.length()!=8 && date.length()!=6) {
+			cout<<"Invalid.\n";
+			return false;
+		}
+		return true;
+	});
 	if (date.length()==8) { // Daily
 		while (getline(fin,line)) {
 			istringstream iss(line);
@@ -399,25 +408,31 @@ void Set_Auto_Record(User &user,string database) {
 	cout<<"Enter your choice : ";
 	cin>>choice;
 	if (choice==1) {
-			ofstream fout,fout2;
-			fout.open(database,ios::app);
-			fout2.open("Auto_"+database,ios::app);
-			if (fout.fail()||fout2.fail())
-				exit(1);
-			string Account,Amount,Category,days;
+		ofstream fout,fout2;
+		string Account,Amount,Category,days;
+		fout.open(database,ios::app);
+		fout2.open("Auto_"+database,ios::app);
+		if (fout.fail()||fout2.fail())
+			exit(1);
+		Validate([&]() {
 			cout<<"Enter record (Account) (Amount) (Category) : ";
-			cin>>Account>>Amount>>Category;
-			cout<<"For every 1: Mon  2: Tue  3: Wed  4: Thu\n";
-			cout<<"          5: Fri  6: Sat  0: Sun\n";
-			cout<<"You may select multiple days (i.e. 12345)\nEnter : ";
-			cin>>days;
-			cout<<"The Auto-Record is activated.\n";
-			fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
-			fout<<date.timestamp<<"-Auto:"<<days<<endl;
-			fout2<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
-			fout2<<date.timestamp<<"-Auto:"<<days<<endl;
-			fout.close();
-			fout2.close();
+			if(!(cin>>Account) || !(cin>>Amount) || !(cin>>Category)) {
+				cout<<"Invalid.\n";
+				return false;
+			}
+			return true;
+		});
+		cout<<"For every 1: Mon  2: Tue  3: Wed  4: Thu\n";
+		cout<<"          5: Fri  6: Sat  0: Sun\n";
+		cout<<"You may select multiple days (i.e. 12345)\nEnter : ";
+		cin>>days;
+		cout<<"The Auto-Record is activated.\n";
+		fout<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
+		fout<<date.timestamp<<"-Auto:"<<days<<endl;
+		fout2<<user.username<<' '<<Account<<' '<<Amount<<' '<<Category<<' ';
+		fout2<<date.timestamp<<"-Auto:"<<days<<endl;
+		fout.close();
+		fout2.close();
 	}
 	else if (choice==2) {
 		ifstream fin("Auto_Record.txt");
@@ -449,7 +464,7 @@ void Set_Auto_Record(User &user,string database) {
 		fin.close();
 		fout.close();
 		Rename("Auto_Record.txt.temp.txt","Auto_Record.txt");
-  }
+	}
 	else if (choice<1||choice>2) {
 		cout<<"Invalid\n";
 	}
@@ -535,14 +550,22 @@ void ShowReport(User &user,vector<string> database) {
 	bool showBudget=false;
 	double income=0,expense=0;
 	map<string,double> map_expense,map_income,account;
-	cout<<"For Monthly Report: Enter MMYYYY \n";
-	cout<<"For Daily Report: Enter DDMMYYYY \nEnter : ";
-	cin>>date;
-	if(date.length()==8) {
+	
+	Validate([&]() {
+		cout<<"For Monthly Report: Enter MMYYYY \n";
+		cout<<"For Daily Report: Enter DDMMYYYY \nEnter : ";
+		cin>>date;
+		if(date.length()!=8 && date.length()!=6) {
+			cout<<"Invalid.\n";
+			return false;
+		}
+		return true;
+	});
+	if(date.length()==8) {	// Daily
 		l=0;
 		u=8;
 	}
-	else {
+	else {					// Monthly
 		l=2;
 		u=6;
 	}

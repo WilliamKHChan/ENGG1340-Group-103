@@ -161,7 +161,6 @@ bool should_Update(User &user,string record_time,string line,int &Count) {
 	int total_days=days_elapsed;
 	int update=-1;
 	int count_days=0;
-	element=0;
 	while (count_days+1<=total_days) {
 		if (weekday==6) {
 			weekday=-1;
@@ -170,14 +169,12 @@ bool should_Update(User &user,string record_time,string line,int &Count) {
 		weekday++;
 		D=to_string(weekday);
 		if (user_input_days.find(D)!=string::npos) {
-			element=0;
-			for (auto i : user.account) {
+			for (auto &i : user.account) {
 				if (i.name==account) {
 					diff=i.amount+amount;
-					user.account[element].amount=diff;
+					i.amount=diff;
 					break;
 				}
-				element++;
 			}
 			days_in_month=Identify_Month(MM);
 			update=0;
@@ -208,10 +205,10 @@ bool should_Update(User &user,string record_time,string line,int &Count) {
 			Count++;
 		}
 	}
-if (update!=0)
-	return false; // no updated record
-else
-	return true; // have updated records
+	if (update!=0)
+		return false; // no updated record
+	else
+		return true; // have updated records
 }
 void Activate_Auto_Record(User &user,vector<string> database) {
 	int turn=1;
@@ -246,8 +243,6 @@ void Activate_Auto_Record(User &user,vector<string> database) {
 	}
 	fin.close();
 	reverse(user.record.begin(), user.record.end());
-	//for (auto i : user.record)
-		//cout<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.date.timestamp<<endl;
 	Update(user,"Record.txt");
 	Update(user,"Account.txt");
 }
@@ -282,7 +277,6 @@ bool Update(const User &user,string filename,string old_username) {
 			temp<<line<<endl;
 		}
 	}
-	// After the while loop
 	if(name=="Information") {
 		temp<<user.username<<" "<<user.password<<" "<<user.name<<endl;
 	}
@@ -292,9 +286,7 @@ bool Update(const User &user,string filename,string old_username) {
 	}
 	else if(name=="Record") {
 		for(auto i : user.record) {
-			//ExtractTime(i.date,false);
 			temp<<user.username<<" "<<i.account<<" "<<i.income<<" "<<i.type<<" "<<i.date.timestamp<<endl;
-			//Update_Record();
 		}
 	}
 	else if(name=="Budget") {
@@ -313,11 +305,9 @@ void Rename(string old_name,string new_name) {
 		cout<<new_name<<" remove fail !\n";
 	if (rename(old_name.c_str(),new_name.c_str())!=0)
 		cout<<"rename fail !\n";
-	//if (remove(old_name.c_str())!=0)
-		//cout<<old_name<<" remove fail !\n";
 	return;
 }
-void ExtractTime(Time &time,bool isExtract) { // Convert string into int
+void ExtractTime(Time &time,bool isExtract) {
 	if(isExtract) {
 		time.year=atoi(time.timestamp.substr(4,4).c_str());
 		time.month=atoi(time.timestamp.substr(2,2).c_str());
@@ -385,16 +375,26 @@ void RenewBudget(User &user,string database) {
 		if(i.period=="Daily" && i.date.timestamp.substr(0,8)!=date.timestamp.substr(0,8)) {
 			cout<<"Daily Budget renewed !\n";
 			i.remain=i.amount;
-			i.date.timestamp=date.timestamp;  // Update timestamp
+			i.date.timestamp=date.timestamp;
 			ExtractTime(i.date,true);
 		}
 		else if(i.period=="Monthly" && i.date.timestamp.substr(2,6)!=date.timestamp.substr(2,6)) {
 			cout<<"Monthly Budget renewed !\n";
 			i.remain=i.amount;
-			i.date.timestamp=date.timestamp; // Update timestamp
+			i.date.timestamp=date.timestamp;
 			ExtractTime(i.date,true);
 		}
 	}
 	Update(user,database);
+	return;
+}
+void Validate(function<bool()> func) {
+	bool valid;
+	do {
+		valid=func();
+		cin.clear();
+		cin.sync();
+	}
+	while(!valid);
 	return;
 }
