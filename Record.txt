@@ -28,3 +28,6 @@ Nelson Bank -30 Entertainment 2404201915443
 Nelson Bank -22 Transportation 2504201918404-Auto:12345
 Nelson Bank -22 Transportation 2604201918405-Auto:12345
 Nelson Bank -56 food 2604201913015
+Nelson Bank -100 Entertainment 2604201920065
+Nelson Bank 10000 Salary 2604201920225
+Nelson Bank -200 Food 2604201920285
