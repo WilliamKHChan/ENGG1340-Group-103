@@ -1,5 +1,5 @@
 Information
-Username Password Name_ID
+Username|Password
 
 User0001 user1
 AngelWen angel
