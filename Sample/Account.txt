@@ -1,3 +1,2 @@
 Account
 Username|AccountName|Amount
-

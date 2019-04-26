@@ -49,6 +49,7 @@ To avoid the daunting corollary of neglecting own financail status, one must set
                          Account : Credit Card: -$5100
 
   5. Set or cancel auto-record for daily expenditure
+     (When setting an auto-record, it is also a record of the current time. )
 
                     i.e. 1 Set an auto-record  2 Cancel auto-record
                          Please enter your choice : 1

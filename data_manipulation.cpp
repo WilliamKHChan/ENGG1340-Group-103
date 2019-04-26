@@ -133,7 +133,8 @@ void Auto_insert_time(Time &date,string Timestamp) {
 bool should_Update(User &user,string record_time,string line,int &Count) {
 	Time time;
 	GetCurrentTime(time);
-	int current_month=time.month;
+	int current_month=time.month; // If you want to test this function
+																// Please use current_month=6
 	double amount,diff;
 	Record rd;
 	string D,data,Timestamp,date1,date2,date3,tail,name,account;
