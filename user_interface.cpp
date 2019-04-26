@@ -275,8 +275,6 @@ void Delete_Record(User &user,vector<string> database) {
 	cin>>choice;
 	if (choice==2) {
 		View_Record(user,database[1],false);
-		//for (auto i : user.record)
-			//cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
 		cout<<"\tPlease enter the index : ";
 		cin>>index;
 		for(auto &i : user.account) {
@@ -305,7 +303,6 @@ void Delete_Record(User &user,vector<string> database) {
 				}
 				else
 					end=pos+1;
-				//cout<<"Deleted !\n";
 			}
 			pos++;
 		}
@@ -322,8 +319,6 @@ void Delete_Record(User &user,vector<string> database) {
 			}
 		}
 		user.record.erase(user.record.begin()+begin,user.record.begin()+end);
-		//for (auto i : user.record)
-			//cout<<i.account<<' '<<i.income<<' '<<i.type<<' '<<i.date.timestamp<<endl;
 	}
 	for(auto &i : database) {
 		Update(user,i);
@@ -332,7 +327,6 @@ void Delete_Record(User &user,vector<string> database) {
 }
 void View_Record(User &user,string database,bool show) {
 	int turn=1;
-	//int index=1;
 	int length=-1;
 	ifstream fin(database);
 	if (fin.fail())
@@ -472,7 +466,7 @@ void SetBudget(User &user,vector<string> database) {
 		switch(choice) {
 			case 1:
 				cout.setf(ios::fixed,ios::floatfield);
-				//cout.setf(ios::showpoint);
+				cout.setf(ios::showpoint);
 				cout<<setprecision(1);
 				cout<<endl;
 				if(user.budget.empty()) {

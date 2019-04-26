@@ -76,14 +76,47 @@ public:
 bool LoadAll(User&,vector<string>);
 
 /* Function: Load the data from a database
-   Input   : user - the class of User
-   			 filename - the name of the database
+   Input   :     user - the class of User
+   			     filename - the name of the database
    Output  : user with updated member variables related to that database (pass by reference) */
 bool Load(User&,string);
 
+/* Function: count the number of days in a month
+   Input   : month in number
+	 Output  : the number of days in a month*/
+int Identify_Month(int);
+
+/* Function: Get the number of days elapsed since the record time
+   Input   : 					  MM - month of the record time
+	 					 current_month - current month
+						            DD - days of the record time
+	 Output  : number of days elapsed since the record time*/
 int Day_passed(int,int,int);
+
+/* Function: Get the number of days elapsed since the record time
+   Input   : 					  MM - month of the record time
+	 					 current_month - current month
+						            DD - days of the record time
+	 Output  : number of days elapsed since the record time*/
+
+/* Function: Check whether there should be autu-records
+   Input   : 			User - all information about the user
+	 	 					database - all .txt file
+	 Output  : if true, update the information vector of the user*/
 void Activate_Auto_Record(User&,vector<string>);
+
+/* Function: Wrtite the auto-records into the database
+   Input   : 				  User - all information about the user
+	 					   record time - record time of a record
+						          line - auto-record
+										 Count - number of auto-records
+	 Output  : number of auto-records*/
 bool should_Update(User&,string,string,int&);
+
+/* Function: Complete a Time class
+   Input   : 				  date - all information about the user
+	 					     timestamp - all string elements of time
+	 Output  : a Completed Time class*/
 void Auto_insert_time(Time&,string);
 
 /* Function: Update the data in all the databases
@@ -100,12 +133,15 @@ bool UpdateAll(const User&,vector<string>,string="");
    Output  : Content in the database updated */
 bool Update(const User&,string,string="");
 
+/* Function: Identif Weekday according to number
+   Input   : day - a number representing the weekday
+	 Output  : weekday in string */
 string Identify_Weekday(int);
 
 /* Function: Rename a file
    Input   : old_name - old name of the file
    		   : new_name - new name of the file
-   Output  : The old filename is replaced by the new name */ 
+   Output  : The old filename is replaced by the new name */
 void Rename(string,string);
 
 /* Function: Manipulation on the class Time
@@ -127,5 +163,5 @@ void InputBudget(Budget&);
 /* Function: Renew daily or monthly budgets
    Input   : user - the class of User
 			 database - the name of the budget database
-   Output  : User.Budget and budget database updated */ 
+   Output  : User.Budget and budget database updated */
 void RenewBudget(User&,string);

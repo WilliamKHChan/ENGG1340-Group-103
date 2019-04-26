@@ -134,9 +134,7 @@ void Auto_insert_time(Time &date,string Timestamp) {
 bool should_Update(User &user,string record_time,string line,int &Count) {
 	Time time;
 	GetCurrentTime(time);
-	//int current_month=5;
 	int current_month=time.month;
-	//cout<<"current_month = "<<current_month<<endl;
 	double amount,diff;
 	Record rd;
 	string D,data,Timestamp,date1,date2,date3,tail,name,account;
@@ -164,7 +162,6 @@ bool should_Update(User &user,string record_time,string line,int &Count) {
 	int update=-1;
 	int count_days=0;
 	element=0;
-	//(time.timestamp.substr(0,2)
 	while (count_days+1<=total_days) {
 		if (weekday==6) {
 			weekday=-1;
@@ -172,13 +169,10 @@ bool should_Update(User &user,string record_time,string line,int &Count) {
 		count_days++;
 		weekday++;
 		D=to_string(weekday);
-		//cout<<"count_days = "<<count_days<<endl;
-		//cout<<"weekday = "<<weekday<<endl;
 		if (user_input_days.find(D)!=string::npos) {
 			element=0;
 			for (auto i : user.account) {
 				if (i.name==account) {
-					//cout<<"- Account !\n";
 					diff=i.amount+amount;
 					user.account[element].amount=diff;
 					break;
@@ -186,9 +180,7 @@ bool should_Update(User &user,string record_time,string line,int &Count) {
 				element++;
 			}
 			days_in_month=Identify_Month(MM);
-			//cout<<"days_in_month = "<<days_in_month<<endl;
 			update=0;
-			//cout<<"DD+count_days = "<<DD+count_days<<endl;
 			if (DD+count_days>days_in_month) {
 				date1=to_string(DD+count_days-days_in_month);
 				next_month=1;
@@ -209,8 +201,6 @@ bool should_Update(User &user,string record_time,string line,int &Count) {
 				date2="0"+date2;
 			date3=D;
 			Timestamp=date1+date2+record_time.substr(4,8)+date3+tail;
-			//cout<<"Month = "<<date2<<endl;
-			//cout<<"Timestamp = "<<Timestamp<<endl;
 			rd.date.timestamp=Timestamp;
 			rd.date.wday=atoi(D.c_str());
 			Auto_insert_time(rd.date,Timestamp);
@@ -219,9 +209,9 @@ bool should_Update(User &user,string record_time,string line,int &Count) {
 		}
 	}
 if (update!=0)
-	return false;
+	return false; // no updated record
 else
-	return true;
+	return true; // have updated records
 }
 void Activate_Auto_Record(User &user,vector<string> database) {
 	int turn=1;
