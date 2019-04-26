@@ -89,10 +89,9 @@ int Identify_Month(int);
 
 /* Function: Get the number of days elapsed since the record time
    Input   : 					  MM - month of the record time
-	 					 current_month - current month
 						            DD - days of the record time
 	 Output  : number of days elapsed since the record time*/
-int Day_passed(int,int,int);
+int Day_passed(int,int);
 
 /* Function: Get the number of days elapsed since the record time
    Input   : 					  MM - month of the record time

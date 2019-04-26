@@ -116,9 +116,8 @@ int Identify_Month(int MM) {
 			break;
 	}
 }
-int Day_passed(int MM,int current_month,int DD) {
+int Day_passed(int MM,int DD) {
 	int days,days_elapsed;
-	int months_elasped=current_month-MM;
 	days=Identify_Month(MM);
 	days_elapsed=days-DD;
 	return days_elapsed;
@@ -142,22 +141,20 @@ bool should_Update(User &user,string record_time,string line,int &Count) {
 	istringstream iss(line);
 	iss>>name;
 	iss>>account;
-	rd.account=account;
 	iss>>amount;
+	rd.account=account;
 	rd.income=amount;
 	iss>>rd.type;
-	int days_in_month,d,element,next_month;
+	int days_in_month,d,element,next_month,days_elapsed;
 	string user_input_days=record_time.substr(19);
 	int weekday=atoi((record_time.substr(12,1)).c_str());
 	int DD=atoi((record_time.substr(0,2)).c_str());
-	int dd=DD;
 	int MM=atoi((record_time.substr(2,2)).c_str());
-	int days_elapsed;
 	d=atoi((time.timestamp.substr(0,2)).c_str());
 	if (current_month-MM==0) // In same month
 		days_elapsed=d-DD;
 	else // Not in same month
-		days_elapsed=d+Day_passed(MM,current_month,DD);
+		days_elapsed=d+Day_passed(MM,DD);
 	int total_days=days_elapsed;
 	int update=-1;
 	int count_days=0;
