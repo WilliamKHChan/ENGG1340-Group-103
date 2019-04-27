@@ -197,31 +197,31 @@ In Linux OS,
 1. Run command `./Accounting_system < create_user.txt`.
 2. Run command `./Accounting_system < sample_run.txt`.
 
-The sample run will create a user called "User_Test" with password "test". It will create and view an account, add and view a record and finally generate a report.
+The sample run will create a user called "User_Test" with password "test". It will create and view an account, add and view records and finally generate a report.
 
 Possible sample output (Omitted non-output):
 ```
-Account Name: Bank            Amount: $10000
+Account Name: Bank            Amount: $20000
 ...
-User_Test Bank -100 Food            25/04/2019-20:27 Thu
+User_Test Bank -50 Food            25/04/2019-20:27 Thu
 ...
 ---------------------------------------------------
 
 Date: 04/2019
 
 Accounts:
-Bank: $9900.0
+Bank: $19950.0
 
 Summary:
-Total income: $0.0
-Total expense: $100.0
-Net income: $-100.0
+Total income: $10000.0
+Total expense: $50.0
+Net income: $9950.0
 
 Income by category:
-Empty
+Salary: $10000.0 (100.0%)
 
 Expense by category:
-Food: $100.0 (100.0%)
+Food: $50.0 (100.0%)
 
 ---------------------------------------------------
 ```
