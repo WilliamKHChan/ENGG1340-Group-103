@@ -385,8 +385,6 @@ void Validate(function<bool()> func) {
 	bool valid;
 	do {
 		valid=func();
-		cin.clear();
-		cin.sync();
 	}
 	while(!valid);
 	return;

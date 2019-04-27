@@ -1,9 +1,9 @@
 1
-user
+User_Test
 test
 4
 Bank
-+10000
+10000
 Salary
 4
 Bank
@@ -16,6 +16,8 @@ Food
 Daily
 Transportation
 20
+5
+8
 2
 Daily
 Food

@@ -1,3 +1,5 @@
 Budget
 UserName|Period|Timestamp|Type|BudgetAmount|Remain
--
+
+User_Test Daily 2704201916056 Transportation 20 20
+User_Test Daily 2704201916056 Food 100 100

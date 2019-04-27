@@ -2,8 +2,8 @@ Account
 Username|AccountName|Amount
 
 User0001 Bank 90000
+Nelson Bank 28395
+Nelson Investment 10000
 JasonChan Bank 10000
 JasonChan Card 5000
 JasonChan Cash 9000
-Nelson Bank 28395
-Nelson Investment 10000

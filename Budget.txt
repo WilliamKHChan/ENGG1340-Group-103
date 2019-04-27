@@ -2,9 +2,9 @@ Budget
 UserName|Period|Timestamp|Type|BudgetAmount|Remain
 
 AngelWen Daily 0404201911230 Food 10000 10000
-JasonChan Daily 0704201919170 Game 1000 1000
-JasonChan Monthly 0704201919170 Food 1000 1000
 William Daily 0704201919400 Game 1000 1000
 Nelson Daily 2704201912596 Food 100 100
 Nelson Daily 2704201914286 Transportation 22 22
 Nelson Monthly 1404201914500 Entertainment 680 650
+JasonChan Daily 2704201915536 Game 1000 1000
+JasonChan Monthly 0704201919170 Food 1000 1000

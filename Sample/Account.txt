@@ -1,4 +1,2 @@
 Account
 Username|AccountName|Amount
--
-user Bank 10000
