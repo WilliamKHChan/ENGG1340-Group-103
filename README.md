@@ -2,7 +2,7 @@
 ### Table of Content
 - [Problem Statement](#statement)
 - [Problem Setting](#setting)
-- [Functionalities and Features](#functionality)
+- [Features and Functionalities](#functionality)
 - [Input/output Specifications](#specification)
 - [Compilation and Execution Instructions](#instruction)
 
