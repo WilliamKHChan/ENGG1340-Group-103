@@ -1,5 +1,3 @@
 Budget
 UserName|Period|Timestamp|Type|BudgetAmount|Remain
 -
-user Daily 2704201913126 Transportation 20 20
-user Daily 2704201913126 Food 100 100

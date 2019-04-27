@@ -1,4 +1,4 @@
 Account
 Username|AccountName|Amount
 -
-User_Test Bank 10000
+user Bank 10000
