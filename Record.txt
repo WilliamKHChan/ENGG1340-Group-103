@@ -15,3 +15,8 @@ Nelson Bank -22 Transportation 1804201918404-Auto:12345
 Nelson Bank -20 Food 2104201913280
 Nelson Bank -50 Food 2104201915200
 Nelson Bank -22 Transportation 1904201918405-Auto:12345
+Nelson Bank -22 Transportation 2204201918401-Auto:12345
+Nelson Bank -22 Transportation 2304201918402-Auto:12345
+Nelson Bank -22 Transportation 2404201918403-Auto:12345
+Nelson Bank -22 Transportation 2504201918404-Auto:12345
+Nelson Bank -22 Transportation 2604201918405-Auto:12345

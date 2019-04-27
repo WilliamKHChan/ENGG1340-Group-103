@@ -1,2 +1,4 @@
 Auto_Record
 Username|Account|Amount|Category|Timestamp
+x
+user Bank -20 Transportation 2704201913106-Auto:123

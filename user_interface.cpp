@@ -482,7 +482,7 @@ void SetBudget(User &user,vector<string> database) {
 					break;
 				}
 				for(auto i:user.budget) {
-					cout<<left<<setw(13)<<i.type;
+					cout<<left<<setw(15)<<i.type;
 					cout<<" ("<<left<<setw(7)<<i.period<<"): $";
 					cout<<i.amount<<" Remain: $"<<i.remain<<endl;
 				}
@@ -543,7 +543,7 @@ void ShowReport(User &user,vector<string> database) {
 	bool showBudget=false;
 	double income=0,expense=0;
 	map<string,double> map_expense,map_income,account;
-	
+
 	Validate([&]() {
 		cout<<"For Monthly Report: Enter MMYYYY \n";
 		cout<<"For Daily Report: Enter DDMMYYYY \nEnter : ";
