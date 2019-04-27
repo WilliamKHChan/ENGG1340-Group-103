@@ -8,18 +8,18 @@
 <a name="statement"></a>
 ## Problem Statement
 *IDEAL*:\
-Personal financial management is important. It allows people to allocate their wealth effectively. With a plan to avoid overspending, the savings can be used to fulfill long-term goals like buying a property, retirement, and crucailly, paying for any urgent needs. Hopefully, one can snowball wealth over time and have no worry about money. \
+Personal financial management is important. It allows people to allocate their wealth effectively. With a plan to avoid overspending, the savings can be used to fulfill long-term goals like buying a property, retirement, and crucially, paying for any urgent needs. Hopefully, one can snowball wealth over time and have no worry about money. \
 \
 *REALITY*:\
-Living in a prosperous and materialistic society, people are not aware of the importance of financial planning. They tend to spend money for their desires rather than their actual needs. More often, people do not record their spendings, thus having little idea about where does their money go to. Worese still, they do not even know that they have overspent. Togehter with the emergence of cashless payment methods which encourage people to spend more, personal financail management seems to be a formindable problem.\
+Living in a prosperous and materialistic society, people are not aware of the importance of financial planning. They tend to spend money for their desires rather than their actual needs. More often, people do not record their spending, thus having little idea about where does their money go to. Worse still, they do not even know that they have overspent. Together with the emergence of cashless payment methods which encourage people to spend more, personal financial management seems to be a formidable problem.\
 \
 *CONSEQUENCES*:\
-Owing to monthly overspending, the result will either be huge credit card debts or very little savings. To solve these problems, people may resort to borrow loans from private finance companies to cover previous debts. It is common that people have poor credit ratings owing to the lack of proper finanical management. The consequences are inconceivably severe when someone have little knowlegde about how to manage and invest their hard-earned money.
+Owing to monthly overspending, the result will either be huge credit card debts or very little savings. To solve these problems, people may resort to borrow loans from private finance companies to cover previous debts. It is common that people have poor credit ratings owing to the lack of proper financial management. The consequences are inconceivably severe when someone have little knowledge about how to manage and invest their hard-earned money.
 
 <a name="setting"></a>
 ## Problem Setting
 *Features*:\
-To avoid the daunting corollary of neglecting own financail status, one must set budgets for every expense and keep track of the cashflow. In a bid to help people manage their money effectively, we created this tool.
+To avoid the daunting corollary of neglecting own financial status, one must set budgets for every expense and keep track of the cashflow. In a bid to help people manage their money effectively, we created this tool.
 
 *Functions of the tool*:
   1. Create, delete and view accounts
@@ -84,7 +84,7 @@ To avoid the daunting corollary of neglecting own financail status, one must set
 *Assumptions:*
 
 1. The user must follow the command manual in order to execute the program properly.
-2. Users can only add records in the cuurent date
+2. Users can only add records in the current date
 
 <a name="specification"></a>
 ## Input/output Specifications
